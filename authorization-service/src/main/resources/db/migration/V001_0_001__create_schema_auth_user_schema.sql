@@ -1,0 +1,1 @@
+CREATE schema auth_user_schema;
