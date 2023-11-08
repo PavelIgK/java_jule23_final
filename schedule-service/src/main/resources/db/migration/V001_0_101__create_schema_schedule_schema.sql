@@ -1,1 +1,0 @@
-CREATE schema schedule_schema;
