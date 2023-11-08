@@ -6,28 +6,23 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import java.time.LocalTime;
+import java.util.Date;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Сущность "Шаблон расписания сотрудника".
+ * Сущность "Расписание сотрудника".
  *
  */
 @Entity
 @Getter
 @Setter
-public class ScheduleTemplate {
+public class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
-    /**
-     * Наименование расписания.
-     */
-    private String scheduleName;
 
     /**
      * Id исполнителя услуг.
@@ -40,15 +35,15 @@ public class ScheduleTemplate {
     private String login;
 
     /**
-     * Время начала периода оказания услуг.
+     * Дата и время начала периода оказания услуг.
      */
-    @Temporal(TemporalType.TIME)
-    private LocalTime startTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startDateTime;
 
     /**
-     * Время окончания периода оказания услуг.
+     * Дата и время окончания периода оказания услуг.
      */
-    @Temporal(TemporalType.TIME)
-    private LocalTime endTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date endDateTime;
 
 }

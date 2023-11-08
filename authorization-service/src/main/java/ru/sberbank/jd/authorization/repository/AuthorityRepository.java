@@ -3,14 +3,14 @@ package ru.sberbank.jd.authorization.repository;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import ru.sberbank.jd.authorization.entity.Authority;
 import ru.sberbank.jd.authorization.entity.User;
 
 /**
- * Репозиторий для работы с пользователями.
+ * Репозиторий для работы с сущностью "Привилегии".
  *
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface AuthorityRepository extends JpaRepository<Authority, UUID> {
 
-    User getByLogin(String login);
 }

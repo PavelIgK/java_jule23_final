@@ -17,3 +17,9 @@ spring:
     properties:
       hibernate:
         default_schema: auth_user_schema
+
+  flyway:
+    schemas:
+      - auth_user_schema
+    default-schema: auth_user_schema
+    create-schemas: true
