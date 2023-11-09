@@ -1,7 +1,7 @@
 create table schedule_schema.service_user (
     id uuid not null,
-    login varchar(255),
-    user_id uuid,
+    performer_login varchar(255),
+    performer_id uuid,
     service_id uuid,
     primary key (id)
 );

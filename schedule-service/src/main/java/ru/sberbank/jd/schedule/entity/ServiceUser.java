@@ -26,15 +26,15 @@ public class ServiceUser {
      * Ссылка на услугу.
      */
     @ManyToOne
-    private Service service;
+    private ProvidedService providedService;
 
     /**
      * Id исполнителя услуг.
      */
-    private UUID userId;
+    private UUID performerId;
 
     /**
      * Логин исполнителя услуг.
      */
-    private String login;
+    private String performerLogin;
 }

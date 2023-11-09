@@ -61,6 +61,6 @@ public class Order {
      * Ссылка на услугу.
      */
     @ManyToOne
-    private Service service;
+    private ProvidedService providedService;
 
 }
