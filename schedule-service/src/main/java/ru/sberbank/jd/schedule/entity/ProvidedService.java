@@ -18,7 +18,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Service {
+public class ProvidedService {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

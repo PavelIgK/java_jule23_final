@@ -23,3 +23,6 @@ spring:
       - schedule_schema
     default-schema: schedule_schema
     create-schemas: true
+
+server:
+  port: 8081
