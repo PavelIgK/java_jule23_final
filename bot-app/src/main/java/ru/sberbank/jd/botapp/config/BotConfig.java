@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+/**
+ * Конфиги.
+ */
 @Data
 @Component
 @ConfigurationProperties("application.properties")
@@ -15,4 +18,9 @@ public class BotConfig {
     String botName;
     @Value("${bot.token}")
     String token;
+    @Value("${organization.longitude}")
+    Double orgLong;
+    @Value("${organization.latitude}")
+    Double orgLat;
+
 }
