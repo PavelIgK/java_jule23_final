@@ -11,6 +11,9 @@ import org.telegram.telegrambots.meta.generics.TelegramBot;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ru.sberbank.jd.botapp.service.BotMain;
 
+/**
+ * Инициализация бота.
+ */
 @Component
 @Slf4j
 public class BotInitializer {

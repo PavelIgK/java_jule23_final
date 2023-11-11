@@ -10,7 +10,7 @@
 	</parent>
 
 	<artifactId>bot-app</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>bot-app</name>
 	<description>bot-app</description>
 
