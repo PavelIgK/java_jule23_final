@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.time.LocalTime;
@@ -30,14 +31,10 @@ public class ScheduleTemplate {
     private String scheduleName;
 
     /**
-     * Id исполнителя услуг.
+     * Исполнитель услуг.
      */
-    private UUID userId;
-
-    /**
-     * Логин исполнителя услуг.
-     */
-    private String login;
+    @ManyToOne
+    private Performer performer;
 
     /**
      * Время начала периода оказания услуг.

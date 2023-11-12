@@ -4,6 +4,6 @@ create table schedule_schema.service (
     duration integer not null,
     name varchar(255),
     price float(53) not null,
-    primary key (id)
+	CONSTRAINT pk_service PRIMARY KEY (id)
 )
 

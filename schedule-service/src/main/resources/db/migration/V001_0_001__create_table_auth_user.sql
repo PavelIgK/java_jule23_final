@@ -1,4 +1,4 @@
-create table auth_user_schema.auth_user (
+create table schedule_schema.auth_user (
     id uuid not null,
     enabled boolean not null,
     first_name varchar(255),
