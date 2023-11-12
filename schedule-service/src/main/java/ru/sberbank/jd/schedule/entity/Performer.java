@@ -25,11 +25,7 @@ import ru.sberbank.jd.authorization.entity.User;
 @Entity
 @Getter
 @Setter
-public class Performer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+public class Performer extends BaseUser {
 
     /**
      * Пользователь (учетная запись), к которому привязан исполнитель.
@@ -37,20 +33,6 @@ public class Performer {
     @OneToOne
     private User user;
 
-    /**
-     * Имя.
-     */
-    private String firstName;
-
-    /**
-     * Фамилия.
-     */
-    private String lastName;
-
-    /**
-     * Номер телефона.
-     */
-    private String phoneNumber;
 
     /**
      * Список услуг, оказываемых данным пользователем.

@@ -21,11 +21,7 @@ import ru.sberbank.jd.authorization.entity.User;
 @Entity
 @Getter
 @Setter
-public class Client {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+public class Client extends  BaseUser {
 
     /**
      * Пользователь (учетная запись), к которому привязан клиент.
@@ -33,20 +29,6 @@ public class Client {
     @OneToOne
     private User user;
 
-    /**
-     * Имя.
-     */
-    private String firstName;
-
-    /**
-     * Фамилия.
-     */
-    private String lastName;
-
-    /**
-     * Номер телефона.
-     */
-    private String phoneNumber;
 
     /**
      * Список заказов, сделанных данным пользователем.
