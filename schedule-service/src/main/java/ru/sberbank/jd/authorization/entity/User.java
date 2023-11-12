@@ -32,16 +32,6 @@ public class User {
     private String login;
 
     /**
-     * Имя пользователя.
-     */
-    private String firstName;
-
-    /**
-     * Фамилия пользователя.
-     */
-    private String lastName;
-
-    /**
      * Пароль пользователя.
      */
     private String password;
@@ -55,11 +45,6 @@ public class User {
      * id пользователя в Telegram.
      */
     private String telegramId;
-
-    /**
-     * Номер телефона пользователя.
-     */
-    private String phoneNumber;
 
     /**
      * Список привелегий пользователя.
