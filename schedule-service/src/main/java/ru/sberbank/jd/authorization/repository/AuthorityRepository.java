@@ -4,7 +4,6 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.sberbank.jd.authorization.entity.Authority;
-import ru.sberbank.jd.authorization.entity.User;
 
 /**
  * Репозиторий для работы с сущностью "Привилегии".

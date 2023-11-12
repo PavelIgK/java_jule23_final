@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.util.Date;
@@ -25,14 +26,10 @@ public class Schedule {
     private UUID id;
 
     /**
-     * Id исполнителя услуг.
+     * Исполнитель услуг.
      */
-    private UUID userId;
-
-    /**
-     * Логин исполнителя услуг.
-     */
-    private String login;
+    @ManyToOne
+    private Performer performer;
 
     /**
      * Дата и время начала периода оказания услуг.

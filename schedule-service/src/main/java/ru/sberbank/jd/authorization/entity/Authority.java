@@ -23,8 +23,14 @@ public class Authority {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    /**
+     * Привелегия.
+     */
     private String authority;
 
+    /**
+     * Список пользователей, обладающих привилегией.
+     */
     @ManyToOne
     private User user;
 

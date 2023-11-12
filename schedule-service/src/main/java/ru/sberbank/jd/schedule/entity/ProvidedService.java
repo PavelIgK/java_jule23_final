@@ -4,7 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
@@ -18,6 +22,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(name = "service")
 public class ProvidedService {
 
     @Id
@@ -47,7 +52,14 @@ public class ProvidedService {
     /**
      * Список иполнителей услуги.
      */
+    @ManyToMany
+    @JoinTable(name = "service_performer",
+            joinColumns = @JoinColumn(name = "service_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "performer_id", referencedColumnName = "id"))
+    private Set<Performer> performers;
+
+
     @OneToMany(mappedBy = "service")
-    private Set<ServiceUser> serviceUsers;
+    private Set<Order> orders;
 
 }

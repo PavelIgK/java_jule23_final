@@ -38,29 +38,21 @@ public class Order {
     private Date endDateTime;
 
     /**
-     * Id исполнителя услуг.
-     */
-    private String performerId;
-
-    /**
-     * Логин исполнителя услуг.
-     */
-    private String performerLogin;
-
-    /**
-     * Id клиента.
-     */
-    private String clientId;
-
-    /**
-     * Логин клиента.
-     */
-    private String clientLogin;
-
-    /**
-     * Ссылка на услугу.
+     * Исполнитель услуг.
      */
     @ManyToOne
-    private ProvidedService providedService;
+    private Performer performer;
+
+    /**
+     * Клиент.
+     */
+    @ManyToOne
+    private Client client;
+
+    /**
+     * Услуга.
+     */
+    @ManyToOne
+    private ProvidedService service;
 
 }
