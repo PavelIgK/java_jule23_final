@@ -12,6 +12,7 @@
     <modules>
         <module>schedule-service</module>
         <module>bot-app</module>
+        <module>web-app-service</module>
     </modules>
 
     <properties>
