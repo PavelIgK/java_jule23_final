@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import ru.sberbank.jd.schedule.entity.ScheduleTemplate;
 import ru.sberbank.jd.schedule.repository.ScheduleTemplateRepository;
 
+/**
+ * Сервис для работы с шаблонами расписаний.
+ */
 @Service
 @RequiredArgsConstructor
 public class ScheduleTemplateService {
@@ -35,7 +38,7 @@ public class ScheduleTemplateService {
     }
 
     public ScheduleTemplate updateScheduleTemplate(ScheduleTemplate scheduleTemplate) {
-        return scheduleTemplateRepository.save(getScheduleTemplateById(scheduleTemplate.getId()));
+        return scheduleTemplateRepository.save(scheduleTemplate);
     }
 
     public void deleteScheduleTemplate(ScheduleTemplate scheduleTemplate) {

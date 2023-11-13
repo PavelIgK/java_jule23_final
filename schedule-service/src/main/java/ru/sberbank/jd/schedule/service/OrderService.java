@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import ru.sberbank.jd.schedule.entity.Order;
 import ru.sberbank.jd.schedule.repository.OrderRepository;
 
+/**
+ * Сервис для работы с заказами.
+ */
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -22,6 +25,13 @@ public class OrderService {
         return orderRepository.findById(id).get();
     }
 
+    /**
+     * Получение списка заказов по клиенту.
+     *
+     * @param clientId идентификатор клиента
+     * @param onlyActive только активные
+     * @return список заказов
+     */
     public List<Order> getOrdersByClient(UUID clientId, Boolean onlyActive) {
         if (onlyActive) {
             return orderRepository.getOrderByClient_IdAndStartDateTimeAfter(clientId, new Date());
@@ -30,6 +40,13 @@ public class OrderService {
         }
     }
 
+    /**
+     * Получение списка заказов по исполнителю.
+     *
+     * @param performerId идентификатор исполнителя
+     * @param onlyActive только активные
+     * @return список заказов
+     */
     public List<Order> getOrdersByPerformer(UUID performerId, Boolean onlyActive) {
         if (onlyActive) {
             return orderRepository.getOrderByPerformer_IdAndStartDateTimeAfter(performerId, new Date());
@@ -44,7 +61,7 @@ public class OrderService {
     }
 
     public Order updateOrder(Order order) {
-        return orderRepository.save(getOrderById(order.getId()));
+        return orderRepository.save(order);
     }
 
     public void deleteOrder(Order order) {

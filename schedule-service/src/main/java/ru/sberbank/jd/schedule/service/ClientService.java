@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import ru.sberbank.jd.schedule.entity.Client;
 import ru.sberbank.jd.schedule.repository.ClientRepository;
 
+/**
+ * Сервис для работы с клиентами.
+ */
 @Service
 @RequiredArgsConstructor
 public class ClientService {
@@ -27,7 +30,7 @@ public class ClientService {
     }
 
     public Client updateClient(Client client) {
-        return clientRepository.save(getClientById(client.getId()));
+        return clientRepository.save(client);
     }
 
     public void deleteClient(Client client) {
