@@ -16,8 +16,8 @@ public class ScheduleTemplateDto {
 
     private PerformerDto performer;
 
+
     private LocalTime startTime;
 
     private LocalTime endTime;
-
 }
