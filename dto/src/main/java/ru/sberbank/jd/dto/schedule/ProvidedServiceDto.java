@@ -20,7 +20,4 @@ public class ProvidedServiceDto {
 
     private double price;
 
-    private Set<PerformerDto> performers;
-
-    private Set<OrderDto> orders;
 }

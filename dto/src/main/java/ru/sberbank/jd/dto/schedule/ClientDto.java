@@ -19,6 +19,6 @@ public class ClientDto {
 
     private String phoneNumber;
 
-    private Set<OrderDto> orders;
+    private UserDto user;
 
 }
