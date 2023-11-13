@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+
+  bot-app:
+    build:
+      context: ./bot-app/
+      args:
+        buildno: 001
+    environment:
+      - SERVER_PORT=8086
+    ports:
+      - 8086:8086
+
+  web-app-service:
+    build:
+      context: ./web-app-service/
+      args:
+        buildno: 001
+    environment:
+      - SERVER_PORT=8080
+    ports:
+      - 8080:8080
+
+  schedule-service:
+    build:
+      context: ./schedule-service/
+      args:
+        buildno: 001
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/schedule_db
+      - SERVER_PORT=8081
+    depends_on:
+      - db
+    ports:
+      - 8081:8081
+
+  db:
+    image: postgres:13.10-alpine
+    container_name: database
+    environment:
+      - POSTGRES_DB=schedule_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - 5432:5432
