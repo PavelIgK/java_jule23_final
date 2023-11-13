@@ -19,11 +19,6 @@ public class PerformerDto {
 
     private String phoneNumber;
 
-    private Set<ProvidedServiceDto> providedServices;
+    private UserDto user;
 
-    private Set<OrderDto> orders;
-
-    private Set<ScheduleDto> schedules;
-
-    private Set<ScheduleTemplateDto> scheduleTemplates;
 }
