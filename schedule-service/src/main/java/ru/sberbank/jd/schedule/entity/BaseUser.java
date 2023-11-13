@@ -1,11 +1,18 @@
 package ru.sberbank.jd.schedule.entity;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.UUID;
 
+/**
+ * Общая сущность.
+ */
 @Getter
 @Setter
 @MappedSuperclass
