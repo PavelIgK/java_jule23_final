@@ -17,9 +17,7 @@ import ru.sberbank.jd.dto.authorization.UserDto;
 import ru.sberbank.jd.schedule.entity.Client;
 
 /**
- * Сущность "Пользователь".
- * Хранит данные учетной записи.
- *
+ * Сущность "Пользователь". Хранит данные учетной записи.
  */
 @Entity
 @Getter
@@ -73,7 +71,13 @@ public class User {
                 .build();
     }
 
-    public static User of(UserDto userDto){
+    /**
+     * Метод получения entity из DTO.
+     *
+     * @param userDto DTO
+     * @return entity
+     */
+    public static User of(UserDto userDto) {
         return User.builder()
                 .id(userDto.getId())
                 //.authorities()
