@@ -1,6 +1,9 @@
 package ru.sberbank.jd.authorization.service;
 
-import ru.sberbank.jd.authorization.entity.User;
+import java.util.List;
+import java.util.UUID;
+import ru.sberbank.jd.dto.authorization.UserDto;
+
 
 /**
  * Сервис по работе с сущностью пользователя.
@@ -8,11 +11,37 @@ import ru.sberbank.jd.authorization.entity.User;
  */
 public interface UserService {
 
+
     /**
-     * Получить пользователя по логину.
+     * Получить всех пользователей.
      *
-     * @param login - логин
+     * @return - список пользователей
+     */
+    List<UserDto> findAll();
+
+    /**
+     * Получить пользователя по UUID.
+     *
+     * @param id - UUID
      * @return - экземпляр пользователя
      */
-    User getUserByLogin(String login);
+    UserDto getUserById(UUID id);
+
+    /**
+     * Получить пользователя по telegramID.
+     *
+     * @param telegramId - телеграм id
+     * @return - экземпляр пользователя
+     */
+    UserDto getUserByTelegramId(String telegramId);
+
+
+    /**
+     * Получить пользователя по логин паролю.
+     *
+     * @param login login
+     * @param password password
+     * @return - экземпляр пользователя
+     */
+    UserDto getUserByLoginAndPassword(String login, String password);
 }
