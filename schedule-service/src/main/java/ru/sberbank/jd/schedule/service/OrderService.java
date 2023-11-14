@@ -3,8 +3,10 @@ package ru.sberbank.jd.schedule.service;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.sberbank.jd.dto.schedule.OrderDto;
 import ru.sberbank.jd.schedule.entity.Order;
 import ru.sberbank.jd.schedule.repository.OrderRepository;
 
@@ -17,18 +19,18 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+    public List<OrderDto> getAllOrders() {
+        return orderRepository.findAll().stream().map(Order::toDto).toList();
     }
 
-    public Order getOrderById(UUID id) {
-        return orderRepository.findById(id).get();
+    public OrderDto getOrderById(UUID id) {
+        return orderRepository.findById(id).get().toDto();
     }
 
     /**
      * Получение списка заказов по клиенту.
      *
-     * @param clientId идентификатор клиента
+     * @param clientId   идентификатор клиента
      * @param onlyActive только активные
      * @return список заказов
      */
@@ -44,7 +46,7 @@ public class OrderService {
      * Получение списка заказов по исполнителю.
      *
      * @param performerId идентификатор исполнителя
-     * @param onlyActive только активные
+     * @param onlyActive  только активные
      * @return список заказов
      */
     public List<Order> getOrdersByPerformer(UUID performerId, Boolean onlyActive) {
@@ -55,13 +57,14 @@ public class OrderService {
         }
     }
 
-    public Order addOrder(Order order) {
+    public OrderDto addOrder(OrderDto orderDto) {
+        Order order = Order.of(orderDto);
         order.setId(UUID.randomUUID());
-        return orderRepository.save(order);
+        return orderRepository.save(order).toDto();
     }
 
-    public Order updateOrder(Order order) {
-        return orderRepository.save(order);
+    public OrderDto updateOrder(OrderDto orderDto) {
+        return orderRepository.save(Order.of(orderDto)).toDto();
     }
 
     public void deleteOrder(Order order) {
