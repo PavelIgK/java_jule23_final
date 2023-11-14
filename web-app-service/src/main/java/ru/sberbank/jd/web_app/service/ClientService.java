@@ -1,23 +1,23 @@
 package ru.sberbank.jd.web_app.service;
 
 import org.springframework.stereotype.Service;
-import ru.sberbank.jd.web_app.entity.Client;
-import ru.sberbank.jd.web_app.repository.ClientRepository;
-import ru.sberbank.jd.web_app.repository.PerformerRepository;
+import org.springframework.web.client.RestTemplate;
+import ru.sberbank.jd.dto.schedule.ClientDto;
+//import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
 @Service
 public class ClientService {
 
-    private final ClientRepository clientRepository;
 
-    public ClientService(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
-    }
+    public List<ClientDto> findAllClients() {
+        final String uri = "http://localhost:8081/clients";
 
-    public List<Client> findAllClients() {
-        return clientRepository.findAll();
+        RestTemplate restTemplate = new RestTemplate();
+        //WebClient client = WebClient.builder().baseUrl(properties().getUrl()).build()
+        //return client.get().retrieve().bodyToMono(String.class).block();
+        return restTemplate.getForObject(uri, List.class);
     }
 
 }
