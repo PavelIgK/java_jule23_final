@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.sberbank.jd.dto.schedule.ClientDto;
 import ru.sberbank.jd.schedule.service.ClientService;
 
+/**
+ * Контроллер для работы с клиентами.
+ */
 @RestController
 @RequestMapping("/clients")
 @RequiredArgsConstructor
-@Component
 public class ClientController {
 
     private final ClientService clientService;

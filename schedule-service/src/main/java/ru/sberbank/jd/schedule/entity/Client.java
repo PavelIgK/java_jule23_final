@@ -16,10 +16,8 @@ import ru.sberbank.jd.authorization.repository.UserRepository;
 import ru.sberbank.jd.dto.schedule.ClientDto;
 
 /**
- * Сущность "Клиент".
- * Предназначена для хранения клиентов, заказывающих услуги.
- * Связана с сущностью User (Пользователь) 1:1
- *
+ * Сущность "Клиент". Предназначена для хранения клиентов, заказывающих услуги. Связана с сущностью User (Пользователь)
+ * 1:1
  */
 @Entity
 @Getter
@@ -27,7 +25,7 @@ import ru.sberbank.jd.dto.schedule.ClientDto;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Client extends BaseUser{
+public class Client extends BaseUser {
 
     /**
      * Пользователь (учетная запись), к которому привязан клиент.
@@ -41,7 +39,12 @@ public class Client extends BaseUser{
     @OneToMany(mappedBy = "client")
     private Set<Order> orders;
 
-    public ClientDto toDto(){
+    /**
+     * Метод получения DTO из entity.
+     *
+     * @return DTO объект
+     */
+    public ClientDto toDto() {
         return ClientDto.builder()
                 .id(this.getId())
                 .firstName(this.getFirstName())
@@ -51,7 +54,13 @@ public class Client extends BaseUser{
                 .build();
     }
 
-    public static Client of(ClientDto clientDto){
+    /**
+     * Метод получения entity из DTO.
+     *
+     * @param clientDto DTO
+     * @return entity
+     */
+    public static Client of(ClientDto clientDto) {
 
         return Client.builder()
                 .firstName(clientDto.getFirstName())
