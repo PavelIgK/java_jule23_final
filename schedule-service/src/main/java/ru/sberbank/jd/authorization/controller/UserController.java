@@ -29,22 +29,22 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<UserDto> get() {
+    public List<UserDto> getAllUsers() {
         return userService.findAll();
     }
 
     @GetMapping("/{id}")
-    public UserDto get(@RequestParam UUID id) {
+    public UserDto getUserById(@RequestParam UUID id) {
         return userService.getUserById(id);
     }
 
     @GetMapping("/login")
-    public UserDto get(@RequestHeader Map<String, String> headers) {
+    public UserDto getUserByLonigAndPassword(@RequestHeader Map<String, String> headers) {
         return userService.getUserByLoginAndPassword(headers.get("login"), headers.get("password"));
     }
 
     @GetMapping("/telegramId/{telegramId}")
-    public UserDto get(@PathVariable(value = "telegramId") String telegramId) {
+    public UserDto getUserByTelegramId(@PathVariable(value = "telegramId") String telegramId) {
         return userService.getUserByTelegramId(telegramId);
     }
 
