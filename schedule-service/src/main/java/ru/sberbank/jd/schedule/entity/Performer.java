@@ -1,20 +1,13 @@
 package ru.sberbank.jd.schedule.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+
 import java.util.Set;
-import java.util.UUID;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import ru.sberbank.jd.authorization.entity.User;
+import ru.sberbank.jd.dto.schedule.PerformerDto;
 
 /**
  * Сущность "Исполнитель".
@@ -25,6 +18,9 @@ import ru.sberbank.jd.authorization.entity.User;
 @Entity
 @Getter
 @Setter
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Performer extends BaseUser {
 
     /**
@@ -60,5 +56,35 @@ public class Performer extends BaseUser {
      */
     @OneToMany(mappedBy = "performer")
     private Set<ScheduleTemplate> scheduleTemplates;
+
+    /**
+     * Метод получения DTO из entity.
+     *
+     * @return DTO объект
+     */
+    public PerformerDto toDto() {
+        return PerformerDto.builder()
+                .id(this.getId())
+                .firstName(this.getFirstName())
+                .lastName(this.getLastName())
+                .phoneNumber(this.getPhoneNumber())
+                .user(this.getUser().toDto())
+                .build();
+    }
+
+    /**
+     * Метод получения entity из DTO.
+     *
+     * @param performerDto DTO
+     * @return entity
+     */
+    public static Performer of(PerformerDto performerDto) {
+        return Performer.builder()
+                .firstName(performerDto.getFirstName())
+                .lastName(performerDto.getLastName())
+                .phoneNumber(performerDto.getPhoneNumber())
+                .user(User.of(performerDto.getUser()))
+                .build();
+    }
 
 }

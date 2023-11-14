@@ -3,16 +3,15 @@ package ru.sberbank.jd.schedule.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+
 import java.util.Set;
+
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.sberbank.jd.authorization.entity.User;
-import ru.sberbank.jd.authorization.repository.UserRepository;
 import ru.sberbank.jd.dto.schedule.ClientDto;
 
 /**
@@ -61,7 +60,6 @@ public class Client extends BaseUser {
      * @return entity
      */
     public static Client of(ClientDto clientDto) {
-
         return Client.builder()
                 .firstName(clientDto.getFirstName())
                 .lastName(clientDto.getLastName())
