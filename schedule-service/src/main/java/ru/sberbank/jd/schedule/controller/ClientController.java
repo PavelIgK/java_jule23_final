@@ -41,7 +41,7 @@ public class ClientController {
         return clientService.getClientById(UUID.fromString(id));
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<ClientDto> getAll() {
         return clientService.getAllClients();
     }

@@ -24,8 +24,8 @@
         </thead>
         <tbody>
         <tr th:each="client: ${clients}">
-            <td th:text="${client.username}"/>
-            <td th:text="${client.telegramId}"/>
+            <td th:text="${client.user.login}"/>
+            <td th:text="${client.user.telegramId}"/>
             <td th:text="${client.firstName}"/>
             <td th:text="${client.lastName}"/>
             <td th:text="${client.phoneNumber}"/>

@@ -3,6 +3,7 @@ package ru.sberbank.jd.web_app.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.sberbank.jd.dto.schedule.ClientDto;
 import ru.sberbank.jd.web_app.entity.Client;
 import ru.sberbank.jd.web_app.entity.Performer;
 import ru.sberbank.jd.web_app.service.ClientService;
@@ -21,7 +22,7 @@ public class ClientController {
 
     @GetMapping
     public String getAllClients(Model model) {
-        List<Client> clientList = clientService.findAllClients();
+        List<ClientDto> clientList = clientService.findAllClients();
         model.addAttribute("clients", clientList);
         return "clients";
     }
