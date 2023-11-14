@@ -44,4 +44,12 @@ public interface UserService {
      * @return - экземпляр пользователя
      */
     UserDto getUserByLoginAndPassword(String login, String password);
+
+    /**
+     * Получить пользователя по логин паролю.
+     *
+     * @param userDto userDto
+     * @return - экземпляр пользователя
+     */
+    UserDto add(UserDto userDto);
 }

@@ -1,6 +1,5 @@
 package ru.sberbank.jd.authorization.entity;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -10,11 +9,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Set;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.sberbank.jd.dto.authorization.UserDto;
-import ru.sberbank.jd.schedule.entity.Client;
 
 /**
  * Сущность "Пользователь". Хранит данные учетной записи.
@@ -24,6 +24,8 @@ import ru.sberbank.jd.schedule.entity.Client;
 @Setter
 @Table(name = "auth_user")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
