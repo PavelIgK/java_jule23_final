@@ -6,12 +6,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.sberbank.jd.authorization.service.UserService;
 import ru.sberbank.jd.dto.authorization.UserDto;
 
@@ -46,6 +41,11 @@ public class UserController {
     @GetMapping("/telegramId/{telegramId}")
     public UserDto getUserByTelegramId(@PathVariable(value = "telegramId") String telegramId) {
         return userService.getUserByTelegramId(telegramId);
+    }
+
+    @PostMapping
+    public UserDto add(@RequestBody UserDto userDto) {
+        return userService.add(userDto);
     }
 
 }

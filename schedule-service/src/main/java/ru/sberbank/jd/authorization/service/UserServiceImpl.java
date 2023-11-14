@@ -81,4 +81,18 @@ public class UserServiceImpl implements UserService {
 
         return user.toDto();
     }
+
+
+    /**
+     * Получить пользователя по логин паролю.
+     *
+     * @param userDto userDto
+     * @return - экземпляр пользователя
+     */
+    @Override
+    public UserDto add(UserDto userDto) {
+        User user = User.of(userDto);
+        user = userRepository.save(user);
+        return user.toDto();
+    }
 }
