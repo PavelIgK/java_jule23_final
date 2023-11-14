@@ -22,7 +22,6 @@ import ru.sberbank.jd.schedule.service.ClientService;
 @RestController
 @RequestMapping("/clients")
 @RequiredArgsConstructor
-@Component
 public class ClientController {
 
     private final ClientService clientService;
