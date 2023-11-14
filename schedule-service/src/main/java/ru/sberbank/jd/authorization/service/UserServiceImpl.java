@@ -1,5 +1,6 @@
 package ru.sberbank.jd.authorization.service;
 
+import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,20 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    /**
+     * Получить всех пользователей.
+     *
+     * @return - список пользователей
+     */
+    @Override
+    public List<UserDto> findAll() {
+        List<UserDto> userDtoList = userRepository.findAll()
+                .stream()
+                .map(User::toDto)
+                .toList();
+        return userDtoList;
+    }
 
     /**
      * Получить пользователя по UUID.
@@ -49,6 +64,20 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.getUserByLoginAndPassword(login, password)
                 .orElseThrow(() -> new UserPasswordIncorrect("Пароль пользователя некорректен = " + login));
+
+        return user.toDto();
+    }
+
+    /**
+     * Получить пользователя по telegramID.
+     *
+     * @param telegramId - телеграм id
+     * @return - экземпляр пользователя
+     */
+    @Override
+    public UserDto getUserByTelegramId(String telegramId) {
+        User user = userRepository.getUserByTelegramId(telegramId)
+                .orElseThrow(() -> new UserNotFoundException("Нет пользователя с telegramId = " + telegramId));
 
         return user.toDto();
     }

@@ -1,11 +1,13 @@
 package ru.sberbank.jd.authorization.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +18,6 @@ import ru.sberbank.jd.dto.authorization.UserDto;
 
 /**
  * Контроллер для юзеров.
- *
  */
 @RestController
 @RequestMapping("/user")
@@ -27,7 +28,12 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping()
+    @GetMapping
+    public List<UserDto> get() {
+        return userService.findAll();
+    }
+
+    @GetMapping("/{id}")
     public UserDto get(@RequestParam UUID id) {
         return userService.getUserById(id);
     }
@@ -35,6 +41,11 @@ public class UserController {
     @GetMapping("/login")
     public UserDto get(@RequestHeader Map<String, String> headers) {
         return userService.getUserByLoginAndPassword(headers.get("login"), headers.get("password"));
+    }
+
+    @GetMapping("/telegramId/{telegramId}")
+    public UserDto get(@PathVariable(value = "telegramId") String telegramId) {
+        return userService.getUserByTelegramId(telegramId);
     }
 
 }
