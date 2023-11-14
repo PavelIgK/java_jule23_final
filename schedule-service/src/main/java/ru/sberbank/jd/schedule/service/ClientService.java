@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.sberbank.jd.dto.schedule.ClientDto;
 import ru.sberbank.jd.schedule.entity.Client;
 import ru.sberbank.jd.schedule.repository.ClientRepository;
 
@@ -16,25 +17,26 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
 
-    public List<Client> getAllClients() {
-        return clientRepository.findAll();
+    public List<ClientDto> getAllClients() {
+        return clientRepository.findAll().stream().map(Client::toDto).toList();
     }
 
-    public Client getClientById(UUID id) {
-        return clientRepository.findById(id).get();
+    public ClientDto getClientById(UUID id) {
+        return clientRepository.findById(id).get().toDto();
     }
 
-    public Client addClient(Client client) {
+    public ClientDto addClient(ClientDto clientDto) {
+        Client client = Client.of(clientDto);
         client.setId(UUID.randomUUID());
-        return clientRepository.save(client);
+        return clientRepository.save(client).toDto();
     }
 
-    public Client updateClient(Client client) {
-        return clientRepository.save(client);
+    public ClientDto updateClient(ClientDto clientDto) {
+        return clientRepository.save(Client.of(clientDto)).toDto();
     }
 
-    public void deleteClient(Client client) {
-        clientRepository.delete(client);
+    public void deleteClient(ClientDto clientDto) {
+        clientRepository.delete(Client.of(clientDto));
     }
 
     public void deleteClientById(UUID id) {

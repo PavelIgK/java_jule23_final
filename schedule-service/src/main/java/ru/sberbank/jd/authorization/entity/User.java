@@ -10,9 +10,11 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Set;
 import java.util.UUID;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import ru.sberbank.jd.dto.authorization.UserDto;
+import ru.sberbank.jd.schedule.entity.Client;
 
 /**
  * Сущность "Пользователь".
@@ -23,6 +25,7 @@ import ru.sberbank.jd.dto.authorization.UserDto;
 @Getter
 @Setter
 @Table(name = "auth_user")
+@Builder
 public class User {
 
     @Id
@@ -67,6 +70,17 @@ public class User {
                 .password(this.password)
                 .enabled(this.enabled)
                 .telegramId(this.telegramId)
+                .build();
+    }
+
+    public static User of(UserDto userDto){
+        return User.builder()
+                .id(userDto.getId())
+                //.authorities()
+                .enabled(userDto.isEnabled())
+                .login(userDto.getLogin())
+                .password(userDto.getPassword())
+                .telegramId(userDto.getTelegramId())
                 .build();
     }
 
