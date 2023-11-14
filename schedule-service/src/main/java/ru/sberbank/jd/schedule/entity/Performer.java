@@ -12,8 +12,11 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.util.Set;
 import java.util.UUID;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import ru.sberbank.jd.authorization.entity.User;
 
 /**
@@ -25,6 +28,7 @@ import ru.sberbank.jd.authorization.entity.User;
 @Entity
 @Getter
 @Setter
+@SuperBuilder
 public class Performer extends BaseUser {
 
     /**
