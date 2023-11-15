@@ -238,7 +238,8 @@ public class BotMain extends TelegramLongPollingBot {
             }
         }
 
-        String url = botConfig.getScheduleServiceUrl()
+        String url = "http://"
+                + botConfig.getScheduleServiceUrl()
                 + ":"
                 + botConfig.getScheduleServicePort()
                 + "/user/telegramId/{userId}";
@@ -264,7 +265,8 @@ public class BotMain extends TelegramLongPollingBot {
     }
 
     public UserDto createUser(Long userId) {
-        String createUserUrl = botConfig.getScheduleServiceUrl()
+        String createUserUrl = "http://"
+                + botConfig.getScheduleServiceUrl()
                 + ":"
                 + botConfig.getScheduleServicePort()
                 + "/user";
