@@ -12,6 +12,7 @@ services:
       - 8086:8086
 
   web-app-service:
+    container_name: webapp
     build:
       context: ./web-app-service/
       args:
@@ -22,6 +23,7 @@ services:
       - 8080:8080
 
   schedule-service:
+    container_name: schedule
     build:
       context: ./schedule-service/
       args:
@@ -43,3 +45,10 @@ services:
       - POSTGRES_PASSWORD=password
     ports:
       - 5432:5432
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.16.1.0/24

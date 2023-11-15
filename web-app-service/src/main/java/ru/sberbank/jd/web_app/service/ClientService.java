@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClientService {
 
-    private final String uri = "http://localhost:8081/clients";
+    private final String uri = "http://schedule:8081/clients";
     private final RestTemplate restTemplate = new RestTemplate();
 
 
