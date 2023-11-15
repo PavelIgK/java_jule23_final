@@ -14,7 +14,7 @@ insert into schedule_schema.auth_user(id, enabled, login, password, telegram_id)
     values(cast('00000000-0000-0000-0000-000000000005' as uuid), true, 'malkin', '123', 'malkinTG');
 
 insert into schedule_schema.auth_user(id, enabled, login, password, telegram_id)
-    values(cast('00000000-0000-0000-0000-000000000005' as uuid), true, 'zalkind', '123', 'zalkindTG');
+    values(cast('00000000-0000-0000-0000-000000000006' as uuid), true, 'zalkind', '123', 'zalkindTG');
 
-commit;
+
 
