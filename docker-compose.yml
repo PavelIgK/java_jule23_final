@@ -2,12 +2,17 @@ version: "3.8"
 services:
 
   bot-app:
+    container_name: bot
     build:
       context: ./bot-app/
       args:
         buildno: 001
     environment:
       - SERVER_PORT=8086
+      - SCHEDULE_SERVICE_URL=schedule
+      - SCHEDULE_SERVICE_PORT=8081
+    depends_on:
+      - schedule-service
     ports:
       - 8086:8086
 
@@ -19,6 +24,10 @@ services:
         buildno: 001
     environment:
       - SERVER_PORT=8080
+      - SCHEDULE_SERVICE_URL=schedule
+      - SCHEDULE_SERVICE_PORT=8081
+    depends_on:
+          - schedule-service
     ports:
       - 8080:8080
 
@@ -49,6 +58,3 @@ services:
 networks:
   default:
     driver: bridge
-    ipam:
-      config:
-      - subnet: 172.16.1.0/24
