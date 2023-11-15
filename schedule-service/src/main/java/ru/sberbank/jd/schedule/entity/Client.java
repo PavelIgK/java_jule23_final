@@ -61,6 +61,7 @@ public class Client extends BaseUser {
      */
     public static Client of(ClientDto clientDto) {
         return Client.builder()
+                .id(clientDto.getId())
                 .firstName(clientDto.getFirstName())
                 .lastName(clientDto.getLastName())
                 .phoneNumber(clientDto.getPhoneNumber())

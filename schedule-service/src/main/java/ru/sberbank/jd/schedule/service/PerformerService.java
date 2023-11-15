@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.sberbank.jd.authorization.entity.User;
+import ru.sberbank.jd.authorization.repository.UserRepository;
 import ru.sberbank.jd.dto.schedule.PerformerDto;
 import ru.sberbank.jd.schedule.entity.Performer;
 import ru.sberbank.jd.schedule.repository.PerformerRepository;
@@ -17,6 +19,7 @@ import ru.sberbank.jd.schedule.repository.PerformerRepository;
 public class PerformerService {
 
     private final PerformerRepository performerRepository;
+    private final UserRepository userRepository;
 
     /**
      * Получить список всех исполнителей.
@@ -46,6 +49,8 @@ public class PerformerService {
     public PerformerDto addPerformer(PerformerDto performerDto) {
         Performer performer = Performer.of(performerDto);
         performer.setId(UUID.randomUUID());
+        performer.getUser().setId(UUID.randomUUID());
+        userRepository.save(performer.getUser());
         return performerRepository.save(performer).toDto();
     }
 
@@ -56,7 +61,9 @@ public class PerformerService {
      * @return - исполнитель
      */
     public PerformerDto updatePerformer(PerformerDto performerDto) {
-        return performerRepository.save(Performer.of(performerDto)).toDto();
+        Performer performer = Performer.of(performerDto);
+        userRepository.save(performer.getUser());
+        return performerRepository.save(performer).toDto();
     }
 
     /**

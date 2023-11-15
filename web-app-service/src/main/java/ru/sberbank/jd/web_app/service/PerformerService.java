@@ -1,8 +1,8 @@
 package ru.sberbank.jd.web_app.service;
 
 import org.springframework.stereotype.Service;
-import ru.sberbank.jd.web_app.entity.Performer;
-import ru.sberbank.jd.web_app.repository.PerformerRepository;
+import org.springframework.web.client.RestTemplate;
+import ru.sberbank.jd.dto.schedule.PerformerDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,31 +10,29 @@ import java.util.UUID;
 @Service
 public class PerformerService {
 
-    private final PerformerRepository performerRepository;
+    private final String uri = "http://localhost:8081/performers";
+    private final RestTemplate restTemplate = new RestTemplate();
 
-    public PerformerService(PerformerRepository performerRepository) {
-        this.performerRepository = performerRepository;
+    public List<PerformerDto> findAllPerformers() {
+        return restTemplate.getForObject(uri, List.class);
     }
 
-    public List<Performer> findAllPerformers() {
-        return performerRepository.findAll();
+    public void savePerformer(PerformerDto performerDto) {
+        performerDto.setId(UUID.randomUUID());
+        restTemplate.postForEntity(uri,performerDto,PerformerDto.class);
     }
 
-    public void savePerformer(Performer performer) {
-        performer.setId(UUID.randomUUID().toString());
-        performerRepository.save(performer);
+    public void updatePerformer(PerformerDto performerDto) {
+        restTemplate.put(uri+"/"+performerDto.getId(),performerDto);
     }
 
-    public void updatePerformer(Performer performer) {
-        performerRepository.save(performer);
-    }
-
-    public Performer getPerformerById(String id) {
-        return performerRepository.findById(id);
+    public PerformerDto getPerformerById(String id) {
+        System.out.println(restTemplate.getForObject(uri+"/"+id,String.class));
+        return restTemplate.getForObject(uri+"/"+id,PerformerDto.class);
     }
 
     public void deletePerformerById(String id) {
-        performerRepository.delete(id);
+        restTemplate.delete(uri+"/"+id);
     }
 
 }

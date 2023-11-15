@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.sberbank.jd.web_app.entity.ServiceDTO;
 import ru.sberbank.jd.web_app.service.ServiceService;
-
 import java.util.List;
 
 @Controller
