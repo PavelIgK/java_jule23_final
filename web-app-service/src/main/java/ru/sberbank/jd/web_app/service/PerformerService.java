@@ -1,5 +1,6 @@
 package ru.sberbank.jd.web_app.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.sberbank.jd.dto.schedule.PerformerDto;
@@ -8,10 +9,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class PerformerService {
 
     private final String uri = "http://schedule:8081/performers";
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
     public List<PerformerDto> findAllPerformers() {
         return restTemplate.getForObject(uri, List.class);

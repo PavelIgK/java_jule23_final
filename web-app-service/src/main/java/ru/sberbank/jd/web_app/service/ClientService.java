@@ -13,8 +13,7 @@ import java.util.List;
 public class ClientService {
 
     private final String uri = "http://schedule:8081/clients";
-    private final RestTemplate restTemplate = new RestTemplate();
-
+    private final RestTemplate restTemplate;
 
     public List<ClientDto> findAllClients() {
 
