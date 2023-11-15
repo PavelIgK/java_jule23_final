@@ -23,7 +23,7 @@ public class PerformerService {
     }
 
     public void updatePerformer(PerformerDto performerDto) {
-        restTemplate.put(uri,performerDto);
+        restTemplate.put(uri+"/"+performerDto.getId(),performerDto);
     }
 
     public PerformerDto getPerformerById(String id) {

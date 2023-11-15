@@ -80,6 +80,7 @@ public class Performer extends BaseUser {
      */
     public static Performer of(PerformerDto performerDto) {
         return Performer.builder()
+                .id(performerDto.getId())
                 .firstName(performerDto.getFirstName())
                 .lastName(performerDto.getLastName())
                 .phoneNumber(performerDto.getPhoneNumber())
