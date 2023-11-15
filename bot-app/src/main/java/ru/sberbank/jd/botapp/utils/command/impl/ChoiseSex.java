@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import ru.sberbank.jd.botapp.utils.CommandCatalog;
 import ru.sberbank.jd.botapp.utils.Keyboard;
 import ru.sberbank.jd.botapp.utils.command.BaseCommand;
 
@@ -17,8 +17,10 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class ChoiseSex implements BaseCommand {
+
     @Override
-    public SendMessage getMessage(Long chatId, String name) {
+    public SendMessage getMessage(Long chatId, Long userId) {
+
         StringBuilder message = new StringBuilder();
         message.append("Кого записываем?");
         SendMessage result = new SendMessage();
@@ -29,14 +31,16 @@ public class ChoiseSex implements BaseCommand {
 //        String[][] buttons = {{"Мужчина", "Женщина"}, {"Меню"}};
 //        ReplyKeyboardMarkup replyKeyboardMarkup = new Keyboard().getKeyboard(buttons);
 //        result.setReplyMarkup(replyKeyboardMarkup);
-        List<String> buttons = new ArrayList<>();
-        buttons.add("Мужчина");
-        buttons.add("Женщина");
-        InlineKeyboardMarkup inlineKeyboardMarkup = new Keyboard().getKeyboard(
+        List<CommandCatalog> buttons = new ArrayList<>();
+        buttons.add(CommandCatalog.MAN);
+        buttons.add(CommandCatalog.WOMAN);
+        InlineKeyboardMarkup inlineKeyboardMarkup = new Keyboard().getKeyboardFromCommand(
                 buttons,
                 2,
                 true);
         result.setReplyMarkup(inlineKeyboardMarkup);
         return result;
     }
+
+
 }

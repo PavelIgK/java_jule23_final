@@ -22,5 +22,9 @@ public class BotConfig {
     Double orgLong;
     @Value("${organization.latitude}")
     Double orgLat;
+    @Value("${schedule.service.url}")
+    String scheduleServiceUrl;
+    @Value("${schedule.service.port}")
+    Integer scheduleServicePort;
 
 }

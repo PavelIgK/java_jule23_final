@@ -50,25 +50,63 @@ public class Keyboard {
     /**
      * Это клавиатура для конкретного сообщения.
      *
-     * @param buttonsList Список кнопок
+     * @param commandCatalog Список кнопок
      * @param buttonInLine количество кнопок в одном ряду
      * @param addMenuButton добавлять ли кнопку меню
      * @return ReplyKeyboardMarkup
      */
-    public InlineKeyboardMarkup getKeyboard(List<String> buttonsList, Integer buttonInLine, boolean addMenuButton) {
+    public InlineKeyboardMarkup getKeyboardFromCommand(List<CommandCatalog> commandCatalog, Integer buttonInLine, boolean addMenuButton) {
 
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rows = new ArrayList<>();
 
         int countInLine = 0;
         List<InlineKeyboardButton> lineButtons = new ArrayList<>();
-        for (String button : buttonsList) {
+        for (CommandCatalog command : commandCatalog) {
             if (countInLine == buttonInLine) {
                 rows.add(lineButtons);
                 lineButtons = new ArrayList<>();
                 countInLine = 0;
             }
-            lineButtons.add(createButton(button, button));
+            lineButtons.add(createButton(command.getValue(), command.getValue()));
+            countInLine++;
+        }
+        rows.add(lineButtons); //добавляем кнопки последнего ряда оценок
+
+        if (!addMenuButton) {
+            inlineKeyboardMarkup.setKeyboard(rows);
+            return inlineKeyboardMarkup;
+        }
+
+        lineButtons = new ArrayList<>();
+        lineButtons.add(createButton("Меню", "Меню"));
+        rows.add(lineButtons);
+        inlineKeyboardMarkup.setKeyboard(rows);
+        return inlineKeyboardMarkup;
+    }
+
+    /**
+     * Это клавиатура для конкретного сообщения.
+     *
+     * @param commandList Список кнопок
+     * @param buttonInLine количество кнопок в одном ряду
+     * @param addMenuButton добавлять ли кнопку меню
+     * @return ReplyKeyboardMarkup
+     */
+    public InlineKeyboardMarkup getKeyboard(List<String> commandList, Integer buttonInLine, boolean addMenuButton) {
+
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rows = new ArrayList<>();
+
+        int countInLine = 0;
+        List<InlineKeyboardButton> lineButtons = new ArrayList<>();
+        for (String command : commandList) {
+            if (countInLine == buttonInLine) {
+                rows.add(lineButtons);
+                lineButtons = new ArrayList<>();
+                countInLine = 0;
+            }
+            lineButtons.add(createButton(command, command));
             countInLine++;
         }
         rows.add(lineButtons); //добавляем кнопки последнего ряда оценок
