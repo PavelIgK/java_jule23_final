@@ -9,16 +9,20 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.util.Date;
 import java.util.UUID;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ru.sberbank.jd.dto.schedule.ScheduleDto;
 
 /**
  * Сущность "Расписание сотрудника".
- *
  */
 @Entity
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Schedule {
 
     @Id
@@ -42,5 +46,34 @@ public class Schedule {
      */
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDateTime;
+
+    /**
+     * Метод получения DTO из entity.
+     *
+     * @return DTO объект
+     */
+    public ScheduleDto toDto() {
+        return ScheduleDto.builder()
+                .id(this.getId())
+                .startDateTime(this.getStartDateTime())
+                .endDateTime(this.getEndDateTime())
+                .performer(this.getPerformer().toDto())
+                .build();
+    }
+
+    /**
+     * Метод получения entity из DTO.
+     *
+     * @param scheduleDto DTO
+     * @return entity
+     */
+    public static Schedule of(ScheduleDto scheduleDto) {
+        return Schedule.builder()
+                .id(scheduleDto.getId())
+                .startDateTime(scheduleDto.getStartDateTime())
+                .endDateTime(scheduleDto.getEndDateTime())
+                .performer(Performer.of(scheduleDto.getPerformer()))
+                .build();
+    }
 
 }
