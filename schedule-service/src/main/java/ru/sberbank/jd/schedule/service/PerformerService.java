@@ -2,14 +2,15 @@ package ru.sberbank.jd.schedule.service;
 
 import java.util.List;
 import java.util.UUID;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.sberbank.jd.dto.schedule.PerformerDto;
 import ru.sberbank.jd.schedule.entity.Performer;
 import ru.sberbank.jd.schedule.repository.PerformerRepository;
 
 /**
  * Сервис для работы с исполнителями услуг.
- *
  */
 @Service
 @RequiredArgsConstructor
@@ -22,8 +23,8 @@ public class PerformerService {
      *
      * @return - список исполнителей
      */
-    public List<Performer> getAllPerformers() {
-        return performerRepository.findAll();
+    public List<PerformerDto> getAllPerformers() {
+        return performerRepository.findAll().stream().map(Performer::toDto).toList();
     }
 
     /**
@@ -32,29 +33,30 @@ public class PerformerService {
      * @param id - id исполнителя
      * @return - исполнитель
      */
-    public Performer getPerformerById(UUID id) {
-        return performerRepository.findById(id).get();
+    public PerformerDto getPerformerById(UUID id) {
+        return performerRepository.findById(id).get().toDto();
     }
 
     /**
      * Добавить нового исполнителя.
      *
-     * @param performer - исполнитель
+     * @param performerDto - исполнитель
      * @return - исполнитель
      */
-    public Performer addPerformer(Performer performer) {
+    public PerformerDto addPerformer(PerformerDto performerDto) {
+        Performer performer = Performer.of(performerDto);
         performer.setId(UUID.randomUUID());
-        return performerRepository.save(performer);
+        return performerRepository.save(performer).toDto();
     }
 
     /**
      * Обновить исполнителя.
      *
-     * @param performer - исполнитель
+     * @param performerDto - исполнитель
      * @return - исполнитель
      */
-    public Performer updatePerformer(Performer performer) {
-        return performerRepository.save(getPerformerById(performer.getId()));
+    public PerformerDto updatePerformer(PerformerDto performerDto) {
+        return performerRepository.save(Performer.of(performerDto)).toDto();
     }
 
     /**
@@ -64,6 +66,15 @@ public class PerformerService {
      */
     public void deletePerformer(Performer performer) {
         performerRepository.delete(performer);
+    }
+
+    /**
+     * Удалить исполнителя.
+     *
+     * @param id - ID исполнителя
+     */
+    public void deletePerformerById(UUID id) {
+        performerRepository.deleteById(id);
     }
 
 }

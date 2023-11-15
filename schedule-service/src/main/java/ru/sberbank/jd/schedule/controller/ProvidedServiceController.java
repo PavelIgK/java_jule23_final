@@ -11,7 +11,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/services")
-public class ProvidedService {
+public class ProvidedServiceController {
 
     private final ProvidedServiceService providedServiceService;
 
