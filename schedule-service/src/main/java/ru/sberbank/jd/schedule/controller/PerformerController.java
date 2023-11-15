@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/services")
+@RequestMapping("/performers")
 public class PerformerController {
 
     private final PerformerService performerService;
