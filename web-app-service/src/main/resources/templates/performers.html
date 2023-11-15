@@ -21,18 +21,16 @@
             <th scope="col">Имя</th>
             <th scope="col">Фамилия</th>
             <th scope="col">Номер телефона</th>
-            <th scope="col">Активирован</th>
             <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="user: ${performers}">
-            <td th:text="${user.username}"/>
-            <td th:text="${user.telegramId}"/>
+            <td th:text="${user.user.login}"/>
+            <td th:text="${user.user.telegramId}"/>
             <td th:text="${user.firstName}"/>
             <td th:text="${user.lastName}"/>
             <td th:text="${user.phoneNumber}"/>
-            <td th:text="${user.enabled}"/>
             <td>
                 <a th:href="@{/performers/update/{id}(id=${user.id})}" class="btn btn-primary">Изменить</a>
                 <a th:href="@{/performers/delete/{id}(id=${user.id})}" class="btn btn-secondary">Удалить</a>
