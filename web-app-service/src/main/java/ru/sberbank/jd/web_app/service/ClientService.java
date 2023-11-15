@@ -1,5 +1,6 @@
 package ru.sberbank.jd.web_app.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.sberbank.jd.dto.schedule.ClientDto;
@@ -8,13 +9,15 @@ import ru.sberbank.jd.dto.schedule.ClientDto;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ClientService {
+
+    private final String uri = "http://localhost:8081/clients";
+    private final RestTemplate restTemplate = new RestTemplate();
 
 
     public List<ClientDto> findAllClients() {
-        final String uri = "http://localhost:8081/clients";
 
-        RestTemplate restTemplate = new RestTemplate();
         //WebClient client = WebClient.builder().baseUrl(properties().getUrl()).build()
         //return client.get().retrieve().bodyToMono(String.class).block();
         return restTemplate.getForObject(uri, List.class);
