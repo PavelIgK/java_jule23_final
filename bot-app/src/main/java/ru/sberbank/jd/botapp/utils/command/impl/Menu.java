@@ -4,9 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import ru.sberbank.jd.botapp.utils.CommandCatalog;
 import ru.sberbank.jd.botapp.utils.Keyboard;
 import ru.sberbank.jd.botapp.utils.command.BaseCommand;
 
@@ -21,7 +19,7 @@ import java.util.List;
 public class Menu implements BaseCommand {
 
     @Override
-    public SendMessage getMessage(Long chatId, String name) {
+    public SendMessage getMessage(Long chatId, Long userId) {
         StringBuilder message = new StringBuilder();
         message.append("Что пожелаешь мой господин");
 

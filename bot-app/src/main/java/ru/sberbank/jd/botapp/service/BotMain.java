@@ -2,8 +2,9 @@ package ru.sberbank.jd.botapp.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.propertyeditors.CurrencyEditor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendLocation;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -12,15 +13,24 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.sberbank.jd.botapp.config.BotConfig;
+import ru.sberbank.jd.botapp.config.ConfigurationRepository;
+import ru.sberbank.jd.botapp.model.UserCache;
+import ru.sberbank.jd.botapp.repository.UserCacheRepository;
+import ru.sberbank.jd.botapp.utils.CommandCatalog;
 import ru.sberbank.jd.botapp.utils.command.impl.*;
+import ru.sberbank.jd.dto.authorization.UserDto;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Component
 public class BotMain extends TelegramLongPollingBot {
     private final BotConfig botConfig;
+
+    UserCacheRepository userCacheRepository = new ConfigurationRepository().userCacheRepository();
+    private RestTemplate restTemplate = new RestTemplate();
 
     public BotMain(@Value("${bot.token}") String botToken,
                        BotConfig botConfig) {
@@ -42,13 +52,17 @@ public class BotMain extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
 
+
+
         if (update.hasCallbackQuery()) {
             Long userId = update.getCallbackQuery().getFrom().getId();
+            checkAuthorization(userId);
             callbackHandler(update);
         }
 
         if (update.hasMessage() && update.getMessage().hasText()) {
             Long userId = update.getMessage().getFrom().getId();
+            checkAuthorization(userId);
             log.debug("MESSAGE = " + update.getMessage().toString());
             log.debug("CHAT = " + update.getMessage().getChat().toString());
             messageHandler(update);
@@ -66,21 +80,26 @@ public class BotMain extends TelegramLongPollingBot {
         String command = messageText.contains(" ") ? messageText.substring(0, messageText.indexOf(" ")) : messageText;
         command = command.contains("@") ? command.substring(0, command.indexOf("@")) : command;
 
-        String commandText = messageText.contains(" ") ? messageText.substring(messageText.indexOf(" ") + 1) : "";
-
         long chatId = update.getMessage().getChatId();
         String userFirstName = update.getMessage().getFrom().getFirstName();
+        String userLastName = update.getMessage().getFrom().getLastName();
         Long userId = update.getMessage().getFrom().getId();
         SendMessage sendMessage = new SendMessage();
         switch (command) {
             case "/start":
-                startCommandReceived(chatId, userFirstName);
-                break;
             case "/menu":
             case "Меню":
-                sendMessage = new Menu().getMessage(chatId, userFirstName);
+                UserCache currentuserCache = userCacheRepository.getById(userId);
+                currentuserCache.getBreadcrumbs().clear();
+                currentuserCache.getBreadcrumbs().add(CommandCatalog.MENU);
+                currentuserCache.setFirstName(userFirstName);
+                currentuserCache.setLastName(userLastName);
+                currentuserCache.setCreateDateTime(LocalDateTime.now());
+                sendMessage = new Menu().getMessage(chatId, userId);
                 sendMessage(sendMessage);
                 break;
+            default:
+                sendMessage(chatId, "Команда не найдена. Попробуйте /start или /menu");
         }
     }
 
@@ -132,20 +151,6 @@ public class BotMain extends TelegramLongPollingBot {
 
 
     /**
-     * Приветственное сообщение.
-     *
-     * @param chatId айди чата
-     * @param name   имя пользователя
-     */
-    private void startCommandReceived(Long chatId, String name) {
-        StringBuilder result = new StringBuilder();
-        result.append("Привет, ")
-                .append(name);
-        sendMessage(chatId, result.toString());
-    }
-
-
-    /**
      * Метод для обработки команды на уже имеющемся сообщении
      *
      * @param update входящий апдейт.
@@ -163,25 +168,32 @@ public class BotMain extends TelegramLongPollingBot {
         String userName = update.getCallbackQuery().getFrom().getUserName();
 
         SendMessage sendMessage = new SendMessage();
+
+        UserCache currentuserCache = userCacheRepository.getById(userId);
+
         boolean backToMenu = false;
         switch (buttonCommand) {
             case "/menu":
             case "Меню":
-                sendMessage = new Menu().getMessage(chatId, userFirstName);
+                sendMessage = new Menu().getMessage(chatId, userId);
                 sendMessage(sendMessage);
                 backToMenu = true;
                 break;
             case "Записаться":
-                sendMessage = new ChoiseSex().getMessage(chatId, userFirstName);
+                sendMessage = new ChoiseSex().getMessage(chatId, userId);
+                currentuserCache.getBreadcrumbs().add(CommandCatalog.CHOISESEX);
                 break;
             case "Мужчина":
-                sendMessage = new ManMenu().getMessage(chatId, userFirstName);
+                sendMessage = new ManMenu().getMessage(chatId, userId);
+                currentuserCache.getBreadcrumbs().add(CommandCatalog.MAN);
                 break;
             case "Мои записи":
-                sendMessage = new CurrentOrders().getMessage(chatId, userFirstName);
+                sendMessage = new CurrentOrders().getMessage(chatId, userId);
+                currentuserCache.getBreadcrumbs().add(CommandCatalog.CURRENTORDERS);
                 break;
             case "Информация":
-                sendMessage = new Information().getMessage(chatId, userFirstName);
+                sendMessage = new Information().getMessage(chatId, userId);
+                currentuserCache.getBreadcrumbs().add(CommandCatalog.INFORMATION);
                 SendLocation location = SendLocation.builder()
                         .chatId(sendMessage.getChatId())
                         .longitude(botConfig.getOrgLong())
@@ -192,10 +204,9 @@ public class BotMain extends TelegramLongPollingBot {
                 backToMenu = true;
                 break;
             default:
-                sendMessage = new Menu().getMessage(chatId, userFirstName);
+                sendMessage = new Menu().getMessage(chatId, userId);
                 sendMessage(sendMessage);
                 backToMenu = true;
-
         }
 
 
@@ -208,6 +219,8 @@ public class BotMain extends TelegramLongPollingBot {
 
         if (backToMenu) {
             editMessageText.setText("Возвращаемся в меню");
+            currentuserCache.getBreadcrumbs().clear();
+            currentuserCache.getBreadcrumbs().add(CommandCatalog.MENU);
             editMessageText.setReplyMarkup(null);
         }
 
@@ -216,5 +229,55 @@ public class BotMain extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             log.error(e.getMessage());
         }
+    }
+
+    private void checkAuthorization(Long userId) {
+        if (userCacheRepository.contains(userId)) {
+            if (userCacheRepository.getById(userId).isAuthorization()){
+                return;
+            }
+        }
+
+        String url = botConfig.getScheduleServiceUrl()
+                + ":"
+                + botConfig.getScheduleServicePort()
+                + "/user/telegramId/{userId}";
+        Map<String, String> params = new HashMap<>();
+        params.put("userId", userId.toString());
+        UserDto userDto = null;
+
+        try {
+            userDto = restTemplate.getForObject(url, UserDto.class, params);
+        } catch (HttpClientErrorException ex) {
+            log.info("Не удалось получить данные. По telegramId:  " + userId + ". Ошибка:" + ex.getMessage());
+            userDto = createUser(userId);
+        }
+
+        UserCache userCache = UserCache.builder()
+                .userLogin(userDto.getLogin())
+                .userIdTelegram(Long.valueOf(userDto.getTelegramId()))
+                .createDateTime(LocalDateTime.now())
+                .authorization(true)
+                .build();
+        userCacheRepository.save(userCache);
+
+    }
+
+    public UserDto createUser(Long userId) {
+        String createUserUrl = botConfig.getScheduleServiceUrl()
+                + ":"
+                + botConfig.getScheduleServicePort()
+                + "/user";
+
+        restTemplate = new RestTemplate();
+//
+        UserDto userDtoCreated = UserDto.builder()
+                .login(userId.toString())
+                .telegramId(userId.toString())
+                .enabled(true)
+                .build();
+        UserDto userDto = restTemplate.postForObject(createUserUrl, userDtoCreated, UserDto.class);
+        System.out.println("UserDTO = " + userDto);
+        return userDto;
     }
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import ru.sberbank.jd.botapp.utils.CommandCatalog;
 import ru.sberbank.jd.botapp.utils.Keyboard;
 import ru.sberbank.jd.botapp.utils.command.BaseCommand;
 
@@ -17,7 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 public class CurrentOrders implements BaseCommand {
     @Override
-    public SendMessage getMessage(Long chatId, String name) {
+    public SendMessage getMessage(Long chatId, Long userId) {
+
         StringBuilder message = new StringBuilder();
         message.append("1. Мужская стрижка. 31.12.2023 в 10:00. Стоимость 1000 рублей.\n");
         message.append("2. Женская стрижка. 31.12.2023 в 10:00. Стоимость 1500 рублей.\n");
