@@ -10,7 +10,7 @@ import java.util.UUID;
 @Service
 public class PerformerService {
 
-    private final String uri = "http://localhost:8081/performers";
+    private final String uri = "http://schedule:8081/performers";
     private final RestTemplate restTemplate = new RestTemplate();
 
     public List<PerformerDto> findAllPerformers() {
