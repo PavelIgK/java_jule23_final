@@ -22,15 +22,15 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user: ${performers}">
-            <td th:text="${user.user.login}"/>
-            <td th:text="${user.user.telegramId}"/>
-            <td th:text="${user.firstName}"/>
-            <td th:text="${user.lastName}"/>
-            <td th:text="${user.phoneNumber}"/>
+        <tr th:each="performer: ${performers}">
+            <td th:text="${performer.user.login}"/>
+            <td th:text="${performer.user.telegramId}"/>
+            <td th:text="${performer.firstName}"/>
+            <td th:text="${performer.lastName}"/>
+            <td th:text="${performer.phoneNumber}"/>
             <td>
-                <a th:href="@{/performers/update/{id}(id=${user.id})}" class="btn btn-primary">Изменить</a>
-                <a th:href="@{/performers/delete/{id}(id=${user.id})}" class="btn btn-secondary">Удалить</a>
+                <a th:href="@{/performers/update/{id}(id=${performer.id})}" class="btn btn-primary">Изменить</a>
+                <a th:href="@{/performers/delete/{id}(id=${performer.id})}" class="btn btn-secondary">Удалить</a>
             </td>
         </tr>
         </tbody>

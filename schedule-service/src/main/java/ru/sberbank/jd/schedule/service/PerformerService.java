@@ -2,10 +2,8 @@ package ru.sberbank.jd.schedule.service;
 
 import java.util.List;
 import java.util.UUID;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sberbank.jd.authorization.entity.User;
 import ru.sberbank.jd.authorization.repository.UserRepository;
 import ru.sberbank.jd.dto.schedule.PerformerDto;
 import ru.sberbank.jd.schedule.entity.Performer;
@@ -48,8 +46,12 @@ public class PerformerService {
      */
     public PerformerDto addPerformer(PerformerDto performerDto) {
         Performer performer = Performer.of(performerDto);
-        performer.setId(UUID.randomUUID());
-        performer.getUser().setId(UUID.randomUUID());
+        if (performer.getId() == null) {
+            performer.setId(UUID.randomUUID());
+        }
+        if (performer.getUser().getId() == null) {
+            performer.getUser().setId(UUID.randomUUID());
+        }
         userRepository.save(performer.getUser());
         return performerRepository.save(performer).toDto();
     }
