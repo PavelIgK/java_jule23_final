@@ -1,14 +1,19 @@
-package ru.sberbank.jd.authorization.service;
+package ru.sberbank.jd.authorization.service.impl;
 
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.sberbank.jd.authorization.entity.Authority;
 import ru.sberbank.jd.authorization.entity.User;
+import ru.sberbank.jd.authorization.exception.UserLoginExists;
 import ru.sberbank.jd.authorization.exception.UserNotFoundException;
 import ru.sberbank.jd.authorization.exception.UserPasswordIncorrect;
+import ru.sberbank.jd.authorization.exception.UserTelegramIdExists;
+import ru.sberbank.jd.authorization.repository.AuthorityRepository;
 import ru.sberbank.jd.authorization.repository.UserRepository;
+import ru.sberbank.jd.authorization.service.UserService;
 import ru.sberbank.jd.dto.authorization.UserDto;
 
 
@@ -22,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
     /**
      * Получить всех пользователей.
@@ -92,7 +100,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto add(UserDto userDto) {
         User user = User.of(userDto);
+        if (userRepository.getByLogin(user.getLogin()).isPresent()) {
+            throw new UserLoginExists("Пользователь с данным логином уже есть.");
+        }
+
+        if (userRepository.getUserByTelegramId(user.getTelegramId()).isPresent()) {
+            throw new UserTelegramIdExists("Пользователь с данным телеграм ID уже есть.");
+        }
+
         user = userRepository.save(user);
+
+        //Создаем по умолчанию роль CLIENT
+        Authority authority = Authority.builder()
+                .authority("CLIENT")
+                .user(user)
+                .build();
+        authorityRepository.save(authority);
+
         return user.toDto();
     }
 }
