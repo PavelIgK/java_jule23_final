@@ -1,5 +1,6 @@
 package ru.sberbank.jd.web_app.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,14 +10,11 @@ import ru.sberbank.jd.web_app.service.PerformerService;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/performers")
 public class PerformerController {
 
     private final PerformerService performerService;
-
-    public PerformerController(PerformerService performerService) {
-        this.performerService = performerService;
-    }
 
     @GetMapping
     public String getAllPerformers(Model model) {

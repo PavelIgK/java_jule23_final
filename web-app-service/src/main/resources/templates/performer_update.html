@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
 <html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
-    <title>Title</title>
+<head th:replace="~{fragments/layouts :: header}">
+    <title id="pageTitle">Редактирование записи сотрудника</title>
 </head>
 <body>
 <div th:replace="~{fragments/layouts :: menu}"></div>
-<div class="container">
-    <h2>Редактирование записи сотрудника</h2>
-    <hr>
+<h2 class="text-center">Редактирование записи сотрудника</h2>
+<hr>
 
+<div class="container">
     <form action="#" th:action="@{/performers/update}" th:object="${performer}" method="POST">
 
         <input type="hidden" th:field="*{id}"/>
