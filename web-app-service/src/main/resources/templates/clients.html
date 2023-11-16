@@ -26,6 +26,9 @@
             <td th:text="${client.firstName}"/>
             <td th:text="${client.lastName}"/>
             <td th:text="${client.phoneNumber}"/>
+            <td>
+                <a th:href="@{/performers/create_of_client/{id}(id=${client.id})}" class="btn btn-primary">Сделать сотрудником</a>
+            </td>
         </tr>
         </tbody>
     </table>

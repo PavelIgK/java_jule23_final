@@ -10,6 +10,9 @@
 
 <div class="container">
     <form action="#" th:action="@{/performers}" th:object="${performer}" method="POST">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{user.id}"/>
+        <input type="hidden" th:field="*{user.password}"/>
         <div class="form-group">
             <label for="username">Логин</label>
         <input id="username" type="text" th:field="*{user.login}" placeholder="Введите логин" class="form-control mb-4 col-4">

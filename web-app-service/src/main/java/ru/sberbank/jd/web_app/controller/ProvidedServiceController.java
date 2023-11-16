@@ -27,7 +27,7 @@ public class ProvidedServiceController {
     public String showCreateServiceForm(Model model) {
         ProvidedServiceDto serviceDto = new ProvidedServiceDto();
         model.addAttribute("service", serviceDto);
-        return "create_service";
+        return "service_create";
     }
 
     @PostMapping
