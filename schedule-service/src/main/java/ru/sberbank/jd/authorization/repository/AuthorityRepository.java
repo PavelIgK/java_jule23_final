@@ -1,5 +1,6 @@
 package ru.sberbank.jd.authorization.repository;
 
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,5 +12,5 @@ import ru.sberbank.jd.authorization.entity.Authority;
  */
 @Repository
 public interface AuthorityRepository extends JpaRepository<Authority, UUID> {
-
+    Optional<Authority> getAuthoritiesById(UUID id);
 }
