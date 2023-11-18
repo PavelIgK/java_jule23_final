@@ -41,6 +41,11 @@ public class ScheduleController {
         return scheduleService.getAllSchedule();
     }
 
+    @GetMapping("/performer/{id}")
+    public List<ScheduleDto> getScheduleByPerformerId(@PathVariable("id") String id) {
+        return scheduleService.getScheduleByPerformerId(UUID.fromString(id));
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") String id) {
         scheduleService.deleteScheduleById(UUID.fromString(id));
