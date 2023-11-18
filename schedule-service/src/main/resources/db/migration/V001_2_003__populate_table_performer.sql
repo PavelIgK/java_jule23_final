@@ -1,6 +1,6 @@
 
 insert into schedule_schema.performer(id, user_id, first_name, last_name, phone_number)
-    values(cast('00000000-0000-0000-0000-100000000001' as uuid),
+    values(cast('00000000-0000-0000-0000-200000000001' as uuid),
     cast('00000000-0000-0000-0000-000000000001' as uuid), 'Иван', 'Иванов', '9101111111');
 
 insert into schedule_schema.performer(id, user_id, first_name, last_name, phone_number)
