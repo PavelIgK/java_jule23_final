@@ -5,17 +5,18 @@ import ru.sberbank.jd.botapp.model.ChatInfo;
 import ru.sberbank.jd.botapp.model.menu.Menu;
 
 /**
- * Команда информация.
+ * Команда записаться.
  */
-public class Information extends AbstractCommandImpl implements Command {
-    public Information() {
-        super();
-        setCommandName("Информация");
-        setCommandText("Мы находимся по адресу:\n" +
-                "WWW Ленинград:\n" +
-                "СПБ . РУ:\n");
+public class ChooseDate extends AbstractCommandImpl implements Command {
 
-        commands.add(new Location());
+    public ChooseDate() {
+        super();
+        setCommandText("Дата");
+    }
+
+    public ChooseDate(String date) {
+        this();
+        setCommandName(date);
     }
 
     @Override
@@ -26,7 +27,7 @@ public class Information extends AbstractCommandImpl implements Command {
                 .text(this.getCommandText())
                 .build();
 
-        chatInfo.setCallbackMsg(Menu.getKeyboard(chatInfo, sendMessage, Menu.createMenu(commands, 2),true, false));
+        chatInfo.setCallbackMsg(Menu.getKeyboard(chatInfo, sendMessage, Menu.createMenu(commands, 2), true, false));
 
         chatInfo.getMenuCache().add(this);
 

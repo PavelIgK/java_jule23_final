@@ -10,6 +10,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import ru.sberbank.jd.botapp.model.ChatInfo;
 import ru.sberbank.jd.botapp.model.commands.AbstractCommandImpl;
 import ru.sberbank.jd.botapp.model.commands.GoBack;
+import ru.sberbank.jd.botapp.model.commands.ScrollBack;
+import ru.sberbank.jd.botapp.model.commands.ScrollForward;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,26 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class Menu {
 
-    public static List<List<InlineKeyboardButton>> addBackButton(List<List<InlineKeyboardButton>> menu) {
+    private static List<List<InlineKeyboardButton>> addPagination(List<List<InlineKeyboardButton>> menu) {
+
+        List<InlineKeyboardButton> bottomElem = new ArrayList<>();
+
+        ScrollBack scrollBack = new ScrollBack();
+        ScrollForward scrollForward = new ScrollForward();
+
+        bottomElem.add(InlineKeyboardButton.builder()
+                .text(scrollBack.getCommandName())
+                .callbackData(scrollBack.getClass().getName())
+                .build());
+        bottomElem.add(InlineKeyboardButton.builder()
+                .text(scrollForward.getCommandName())
+                .callbackData(scrollForward.getClass().getName())
+                .build());
+        menu.add(bottomElem);
+
+        return menu;
+    }
+    private static List<List<InlineKeyboardButton>> addBackButton(List<List<InlineKeyboardButton>> menu) {
         GoBack goBack = new GoBack();
 
         List<InlineKeyboardButton> bottomElem = new ArrayList<>();
@@ -51,17 +72,17 @@ public class Menu {
         return new ArrayList<>(mapOfChunks.values());
     }
 
-    public static BotApiMethod getKeyboard(ChatInfo chatInfo, SendMessage sendMessage, List<List<InlineKeyboardButton>> menu) {
+    public static BotApiMethod getKeyboard(ChatInfo chatInfo, SendMessage sendMessage, List<List<InlineKeyboardButton>> menu, boolean addBackBtn, boolean pagination) {
         BotApiMethod callback = null;
         if (chatInfo.getMessageId() != null) {
-            callback = refreshKeyboard(chatInfo, sendMessage, menu, true);
+            callback = refreshKeyboard(chatInfo, sendMessage, menu, addBackBtn, pagination);
         } else {
             callback = sendKeyboard(chatInfo, sendMessage, menu);
         }
         return callback;
     }
 
-    public static EditMessageText refreshKeyboard(ChatInfo chatInfo, SendMessage sendMessage, List<List<InlineKeyboardButton>> menu, boolean addBackBtn) {
+    private static EditMessageText refreshKeyboard(ChatInfo chatInfo, SendMessage sendMessage, List<List<InlineKeyboardButton>> menu, boolean addBackBtn, boolean pagination) {
 
         EditMessageText editMessageText = EditMessageText.builder()
                 .chatId(chatInfo.getChatId())
@@ -71,6 +92,9 @@ public class Menu {
                 .build();
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         inlineKeyboardMarkup.setKeyboard(menu);
+        if (pagination){
+            inlineKeyboardMarkup.setKeyboard(Menu.addPagination(menu));
+        }
         if (addBackBtn){
             inlineKeyboardMarkup.setKeyboard(Menu.addBackButton(menu));
         }
@@ -78,7 +102,7 @@ public class Menu {
         return editMessageText;
     }
 
-    public static SendMessage sendKeyboard(ChatInfo chatInfo, SendMessage sendMessage, List<List<InlineKeyboardButton>> menu) {
+    private static SendMessage sendKeyboard(ChatInfo chatInfo, SendMessage sendMessage, List<List<InlineKeyboardButton>> menu) {
 
         InlineKeyboardMarkup inlineKeyboardMarkup = InlineKeyboardMarkup.builder()
                 .keyboard(menu)

@@ -22,13 +22,8 @@ public class Location extends AbstractCommandImpl implements Command {
     @Override
     public ChatInfo execute(ChatInfo chatInfo) {
 
-        SendMessage sendMessage = SendMessage.builder()
-                .chatId(chatInfo.getChatId())
-                .text(this.getCommandText())
-                .build();
-
         chatInfo.setCallbackMsg(SendLocation.builder()
-                .chatId(sendMessage.getChatId())
+                .chatId(chatInfo.getChatId())
                 .longitude(orgLong)
                 .latitude(orgLat)
                 .horizontalAccuracy(500.0)

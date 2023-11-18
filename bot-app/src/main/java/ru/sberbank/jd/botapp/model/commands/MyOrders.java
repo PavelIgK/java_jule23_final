@@ -21,7 +21,7 @@ public class MyOrders extends AbstractCommandImpl implements Command {
                 .text(this.getCommandText())
                 .build();
 
-        chatInfo.setCallbackMsg(Menu.getKeyboard(chatInfo, sendMessage, Menu.createMenu(commands, 2)));
+        chatInfo.setCallbackMsg(Menu.getKeyboard(chatInfo, sendMessage, Menu.createMenu(commands, 2),true, false));
 
         chatInfo.getMenuCache().add(this);
 

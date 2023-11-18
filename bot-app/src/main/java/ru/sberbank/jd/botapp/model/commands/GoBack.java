@@ -16,7 +16,6 @@ public class GoBack extends AbstractCommandImpl implements Command {
         chatInfo.getMenuCache().remove(chatInfo.getMenuCache().size()-1);
         AbstractCommandImpl commandToOpen = chatInfo.getMenuCache().get(chatInfo.getMenuCache().size()-1);
 
-
         return commandToOpen.execute(chatInfo);
     }
 }

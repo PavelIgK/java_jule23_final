@@ -29,11 +29,7 @@ public class MainMenu extends AbstractCommandImpl implements Command {
                 .text(this.getCommandText())
                 .build();
 
-        if (chatInfo.getMessageId() != null) {
-            chatInfo.setCallbackMsg(Menu.refreshKeyboard(chatInfo, sendMessage, Menu.createMenu(commands, 2),false));
-        } else {
-            chatInfo.setCallbackMsg(Menu.sendKeyboard(chatInfo, sendMessage, Menu.createMenu(commands, 2)));
-        }
+        chatInfo.setCallbackMsg(Menu.getKeyboard(chatInfo, sendMessage, Menu.createMenu(commands, 2),false, false));
 
         ArrayList<AbstractCommandImpl> newMenuCache = new ArrayList<>();
         newMenuCache.add(this);

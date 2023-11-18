@@ -15,6 +15,8 @@ public abstract class AbstractCommandImpl implements Command {
     private String commandName;
     private String commandText;
     ArrayList<AbstractCommandImpl> commands;
+    private int pageNum;
+    private int elemOnPage;
 
     public AbstractCommandImpl() {
         commands = new ArrayList<>();
