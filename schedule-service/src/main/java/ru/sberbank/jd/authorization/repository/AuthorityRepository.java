@@ -13,4 +13,7 @@ import ru.sberbank.jd.authorization.entity.Authority;
 @Repository
 public interface AuthorityRepository extends JpaRepository<Authority, UUID> {
     Optional<Authority> getAuthoritiesById(UUID id);
+
+    Optional<Authority> getAuthorityByAuthorityAndUser_Id(String authority,UUID id);
+
 }

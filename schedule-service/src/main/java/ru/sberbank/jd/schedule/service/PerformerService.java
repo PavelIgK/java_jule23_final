@@ -1,9 +1,12 @@
 package ru.sberbank.jd.schedule.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.sberbank.jd.authorization.entity.Authority;
+import ru.sberbank.jd.authorization.repository.AuthorityRepository;
 import ru.sberbank.jd.authorization.repository.UserRepository;
 import ru.sberbank.jd.dto.schedule.PerformerDto;
 import ru.sberbank.jd.schedule.entity.Performer;
@@ -18,6 +21,7 @@ public class PerformerService {
 
     private final PerformerRepository performerRepository;
     private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
 
     /**
      * Получить список всех исполнителей.
@@ -53,6 +57,14 @@ public class PerformerService {
             performer.getUser().setId(UUID.randomUUID());
         }
         userRepository.save(performer.getUser());
+        Authority authority = Authority.builder()
+                .id(UUID.randomUUID())
+                .authority("PERFORMER")
+                .user(performer.getUser())
+                .build();
+
+        authorityRepository.save(authority);
+
         return performerRepository.save(performer).toDto();
     }
 
@@ -83,6 +95,8 @@ public class PerformerService {
      * @param id - ID исполнителя
      */
     public void deletePerformerById(UUID id) {
+        Optional<Authority> authority = authorityRepository.getAuthorityByAuthorityAndUser_Id("PERFORMER", getPerformerById(id).getUser().getId());
+        authorityRepository.delete(authority.get());
         performerRepository.deleteById(id);
     }
 
