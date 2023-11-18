@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head th:replace="~{fragments/layouts :: header}">
+    <title id="pageTitle">Редактирование графика работы</title>
+</head>
+<body>
+<div th:replace="~{fragments/layouts :: menu}"></div>
+<h2 class="text-center">Редактирование графика работы</h2>
+<hr>
+
+<div class="container">
+    <form action="#" th:action="@{/schedules/update}" th:object="${schedule}" method="POST">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{performer.id}"/>
+        <div class="form-group">
+            <label for="startDateTime">Дата и время начала работы</label>
+        <input id="startDateTime" type="datetime-local" th:field="*{startDateTime}" placeholder="Введите дату и время начала работы" class="form-control mb-4 col-4">
+        </div>
+        <div class="form-group">
+            <label for="endDateTime">Дата и время окончания работы</label>
+            <input id="endDateTime" type="datetime-local" th:field="*{endDateTime}" placeholder="Введите дату и время окончания работы" class="form-control mb-4 col-4">
+        </div>
+        <button type="submit" class="btn btn-info col-2"> Сохранить </button>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous">
+</script>
+</body>
+</html>

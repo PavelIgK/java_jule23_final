@@ -53,7 +53,7 @@ public class PerformerController {
 
     @PostMapping("/update")
     public String updatePerformer(@ModelAttribute("performer") PerformerDto performerDto) {
-        performerService.updatePerformer(performerDto);
+        System.out.println(performerDto);
         return "redirect:/performers";
     }
 
