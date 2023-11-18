@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-
 /**
  * Конфиги.
  */
@@ -22,9 +20,7 @@ public class BotConfig {
     Double orgLong;
     @Value("${organization.latitude}")
     Double orgLat;
-    @Value("${schedule.service.url}")
+    @Value("http://${schedule.service.url}:${schedule.service.port}")
     String scheduleServiceUrl;
-    @Value("${schedule.service.port}")
-    Integer scheduleServicePort;
 
 }
