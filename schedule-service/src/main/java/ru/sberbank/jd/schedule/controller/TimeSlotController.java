@@ -1,5 +1,7 @@
 package ru.sberbank.jd.schedule.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.sberbank.jd.dto.schedule.ClientDto;
@@ -17,12 +19,14 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/timeslots")
 @RequiredArgsConstructor
+@Tag(name = "Таймслоты", description = "Взаимодействие с таймслотами")
 public class TimeSlotController {
 
     private final TimeSlotService timeSlotService;
 
 
     @GetMapping
+    @Operation(summary = "Получить свободные таймслоты")
     public List<TimeSlotDto> getFreeSLots(@RequestParam("performer_id") String performerId,
                                           @RequestParam("date") String dateStr,
                                           @RequestParam("service_id") String serviceId) {
