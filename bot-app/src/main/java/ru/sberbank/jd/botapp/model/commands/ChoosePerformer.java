@@ -1,24 +1,23 @@
 package ru.sberbank.jd.botapp.model.commands;
 
-import lombok.experimental.SuperBuilder;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.sberbank.jd.botapp.model.ChatInfo;
 import ru.sberbank.jd.botapp.model.menu.Menu;
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Команда записаться.
+ * Команда выбора даты.
  */
 
 public class ChoosePerformer extends AbstractCommandImpl implements Command {
 
+    private String id;
     public ChoosePerformer() {
         super();
         setPageNum(1);
         setElemOnPage(8);
-        setCommandText("Исполнитель");
+        setCommandText("Выберите дату");
 
     }
 

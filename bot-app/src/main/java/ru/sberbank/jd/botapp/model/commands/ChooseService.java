@@ -1,36 +1,41 @@
 package ru.sberbank.jd.botapp.model.commands;
 
+import java.util.ArrayList;
 import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.sberbank.jd.botapp.config.AppContextManager;
 import ru.sberbank.jd.botapp.model.ChatInfo;
 import ru.sberbank.jd.botapp.model.menu.Menu;
-import java.util.ArrayList;
-import ru.sberbank.jd.botapp.service.ProvidedServiceService;
+import ru.sberbank.jd.botapp.service.PerformerService;
 
 /**
- * Команда записаться.
+ * Команда выбора мастера.
  */
-public class CreateOrder extends AbstractCommandImpl implements Command {
+public class ChooseService extends AbstractCommandImpl implements Command {
 
-    public CreateOrder(){
+    public ChooseService() {
         super();
         setPageNum(1);
-        setElemOnPage(4);
-        setCommandName("Записаться");
-        setCommandText("Выберите услугу");
+        setElemOnPage(8);
+        setCommandText("Выберите мастера");
     }
+
+    public ChooseService(String service) {
+        this();
+        setCommandName(service);
+    }
+
     @Override
     public ChatInfo execute(ChatInfo chatInfo) {
-        setCommandText("Выберите услугу");
+
         ApplicationContext ctx = AppContextManager.getAppContext();
-        ProvidedServiceService providedServiceService =  ctx.getBean(ProvidedServiceService.class);
+        PerformerService performerService =  ctx.getBean(PerformerService.class);
 
         commands = new ArrayList<>();
-        providedServiceService.findAllServices().forEach(it -> {
-            commands.add(new ChooseService(it.getName()));
-            setCommandText(getCommandText() + "\n" + it.getName() + " цена: " + it.getPrice() + "р.");
-        });
+
+        performerService.findAllPerformers()
+                .forEach(performerDto -> commands.add(new ChoosePerformer(performerDto.getFirstName()
+                        + " "+ performerDto.getLastName())));
 
         SendMessage sendMessage = SendMessage.builder()
                 .chatId(chatInfo.getChatId())
@@ -42,6 +47,6 @@ public class CreateOrder extends AbstractCommandImpl implements Command {
         chatInfo.getMenuCache().add(this);
 
         return chatInfo;
-
     }
+
 }
