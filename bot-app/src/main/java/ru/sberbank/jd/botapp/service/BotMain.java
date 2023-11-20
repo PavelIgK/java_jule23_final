@@ -1,7 +1,11 @@
 package ru.sberbank.jd.botapp.service;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -15,10 +19,12 @@ import ru.sberbank.jd.botapp.model.commands.AbstractCommandImpl;
 import ru.sberbank.jd.botapp.model.commands.MainMenu;
 import ru.sberbank.jd.botapp.model.commands.Unknown;
 import ru.sberbank.jd.botapp.repository.UserCacheRepository;
+import ru.sberbank.jd.dto.authorization.UserDto;
 
 @Slf4j
 @Component
 public class BotMain extends TelegramLongPollingBot {
+
     private final BotConfig botConfig;
 
     UserCacheRepository userCacheRepository = new ConfigurationRepository().userCacheRepository();
@@ -119,20 +125,49 @@ public class BotMain extends TelegramLongPollingBot {
 
     private UserCache getUserCache(Update update) {
         ChatInfo chatInfo = getChatInfo(update);
+        Long userId = chatInfo.getUserId();
 
-        if (userCacheRepository.contains(chatInfo.getUserId())) {
+        if (userCacheRepository.contains(userId)) {
             UserCache userCache = userCacheRepository.getById(chatInfo.getUserId());
             userCache.getChatInfo().setChatId(chatInfo.getChatId());
             userCache.getChatInfo().setUserId(chatInfo.getUserId());
             userCache.getChatInfo().setMessageId(chatInfo.getMessageId());
             return userCache;
-        } else {
-            return UserCache.builder()
-                    .userIdTelegram(chatInfo.getUserId())
-                    .chatInfo(chatInfo)
-                    .build();
         }
+
+        String url = botConfig.getScheduleServiceUrl() + "/user/telegramId/{userId}";
+        Map<String, String> params = new HashMap<>();
+        params.put("userId", userId.toString());
+        UserDto userDto;
+
+        try {
+            userDto = restTemplate.getForObject(url, UserDto.class, params);
+        } catch (HttpClientErrorException ex) {
+            log.info("Не удалось получить данные. По telegramId:  " + userId + ". Ошибка:" + ex.getMessage());
+            userDto = createUser(update);
+        }
+
+        assert userDto != null;
+        return UserCache.builder()
+                .userLogin(userDto.getLogin())
+                .userIdTelegram(Long.valueOf(userDto.getTelegramId()))
+                .createDateTime(LocalDateTime.now())
+                .authorization(true)
+                .chatInfo(chatInfo)
+                .build();
     }
 
+    public UserDto createUser(Update update) {
+        Long userId = getChatInfo(update).getUserId();
+        String url = botConfig.getScheduleServiceUrl() + "/user";
+
+        UserDto userDtoCreated = UserDto.builder()
+                .login(userId.toString())
+                .telegramId(userId.toString())
+                .enabled(true)
+                .build();
+
+        return restTemplate.postForObject(url, userDtoCreated, UserDto.class);
+    }
 
 }
