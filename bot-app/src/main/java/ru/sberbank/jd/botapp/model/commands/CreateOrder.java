@@ -29,7 +29,7 @@ public class CreateOrder extends AbstractCommandImpl implements Command {
         commands = new ArrayList<>();
         providedServiceService.findAllServices().forEach(it -> {
             commands.add(new ChooseService(it.getName()));
-            setCommandText(getCommandText() + "\n" + it.getName() + " цена: " + it.getPrice() + "р.");
+            setCommandText(getCommandText() + "\n" + it.getName() + " цена: " + it.getPrice() + "₽");
         });
 
         SendMessage sendMessage = SendMessage.builder()
