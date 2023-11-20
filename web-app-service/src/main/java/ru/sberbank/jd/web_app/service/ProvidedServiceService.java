@@ -1,8 +1,10 @@
 package ru.sberbank.jd.web_app.service;
 
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import ru.sberbank.jd.dto.schedule.PerformerDto;
 import ru.sberbank.jd.dto.schedule.ProvidedServiceDto;
 import java.util.List;
 import java.util.UUID;
@@ -20,7 +22,7 @@ public class ProvidedServiceService {
     }
 
     public List<ProvidedServiceDto> findAllServices() {
-        return restTemplate.getForObject(getUri(), List.class);
+        return Arrays.asList(restTemplate.getForObject(getUri(), ProvidedServiceDto[].class));
     }
 
     public void saveService(ProvidedServiceDto serviceDto) {

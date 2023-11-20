@@ -22,8 +22,8 @@
         <tbody>
         <tr th:each="order: ${orders}">
             <td th:text="${order.service.name}"/>
-            <td th:text="${order.startDateTime}"/>
-            <td th:text="${order.endDateTime}"/>
+            <td th:text="*{#dates.format(order.startDateTime, 'dd.MM.yyyy HH:mm')}"/>
+            <td th:text="*{#dates.format(order.endDateTime, 'dd.MM.yyyy HH:mm')}"/>
             <td th:text="${order.client.user.login}"/>
             <td th:text="${order.performer.user.login}"/>
         </tr>

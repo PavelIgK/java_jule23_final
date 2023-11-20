@@ -1,5 +1,6 @@
 package ru.sberbank.jd.web_app.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class ScheduleService {
     }
 
     public List<ScheduleDto> findAllSchedules() {
-        return restTemplate.getForObject(getUri(), List.class);
+        return Arrays.asList(restTemplate.getForObject(getUri(), ScheduleDto[].class));
     }
 
     public void saveSchedule(ScheduleDto scheduleDto) {

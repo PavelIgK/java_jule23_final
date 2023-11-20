@@ -1,9 +1,9 @@
 package ru.sberbank.jd.web_app.service;
 
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ru.sberbank.jd.dto.schedule.ClientDto;
 import ru.sberbank.jd.dto.schedule.OrderDto;
 import ru.sberbank.jd.web_app.config.WebAppConfig;
 
@@ -21,6 +21,6 @@ public class OrderService {
     }
 
     public List<OrderDto> findAllOrders() {
-        return restTemplate.getForObject(getUri(), List.class);
+        return Arrays.asList(restTemplate.getForObject(getUri(), OrderDto[].class));
     }
 }

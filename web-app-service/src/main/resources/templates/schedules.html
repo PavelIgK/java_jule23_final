@@ -22,10 +22,10 @@
         </thead>
         <tbody>
         <tr th:each="schedule: ${schedules}">
-            <td th:text="${schedule.performer.firstName}"/>
+            <td th:text="*{schedule.performer.firstName}"/>
             <td th:text="${schedule.performer.lastName}"/>
-            <td th:text="${schedule.startDateTime}"/>
-            <td th:text="${schedule.endDateTime}"/>
+            <td th:text="*{#dates.format(schedule.startDateTime, 'dd.MM.yyyy HH:mm')}"/>
+            <td th:text="*{#dates.format(schedule.endDateTime, 'dd.MM.yyyy HH:mm')}"/>
             <td>
                 <a th:href="@{/schedules/update/{id}(id=${schedule.id})}" class="btn btn-primary">Изменить</a>
                 <a th:href="@{/schedules/delete/{id}(id=${schedule.id})}" class="btn btn-secondary">Удалить</a>

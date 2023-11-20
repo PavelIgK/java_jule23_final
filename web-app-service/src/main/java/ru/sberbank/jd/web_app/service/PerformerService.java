@@ -1,5 +1,6 @@
 package ru.sberbank.jd.web_app.service;
 
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -20,7 +21,7 @@ public class PerformerService {
     }
 
     public List<PerformerDto> findAllPerformers() {
-        return restTemplate.getForObject(getUri(), List.class);
+        return Arrays.asList(restTemplate.getForObject(getUri(), PerformerDto[].class));
     }
 
     public void savePerformer(PerformerDto performerDto) {
