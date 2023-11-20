@@ -5,13 +5,13 @@ import ru.sberbank.jd.botapp.model.ChatInfo;
 import ru.sberbank.jd.botapp.model.menu.Menu;
 
 /**
- * Команда записаться.
+ * Команда выбора времени.
  */
 public class ChooseDate extends AbstractCommandImpl implements Command {
 
     public ChooseDate() {
         super();
-        setCommandText("Дата");
+        setCommandText("Выберите доступное время");
     }
 
     public ChooseDate(String date) {
