@@ -16,5 +16,6 @@ public class ChatInfo {
     private OrderInfo orderInfo;
     private ArrayList<AbstractCommandImpl> menuCache;
     private BotApiMethod callbackMsg;
+    private CallbackData callbackData;
 
 }

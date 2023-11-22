@@ -14,6 +14,7 @@ public abstract class AbstractCommandImpl implements Command {
 
     private String commandName;
     private String commandText;
+    private String dataToSend;
     ArrayList<AbstractCommandImpl> commands;
     private int pageNum;
     private int elemOnPage;

@@ -13,12 +13,14 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.sberbank.jd.botapp.config.BotConfig;
 import ru.sberbank.jd.botapp.config.ConfigurationRepository;
+import ru.sberbank.jd.botapp.model.CallbackData;
 import ru.sberbank.jd.botapp.model.ChatInfo;
 import ru.sberbank.jd.botapp.model.UserCache;
 import ru.sberbank.jd.botapp.model.commands.AbstractCommandImpl;
 import ru.sberbank.jd.botapp.model.commands.MainMenu;
 import ru.sberbank.jd.botapp.model.commands.Unknown;
 import ru.sberbank.jd.botapp.repository.UserCacheRepository;
+import ru.sberbank.jd.botapp.utils.CommandCatalog;
 import ru.sberbank.jd.dto.authorization.UserDto;
 
 @Slf4j
@@ -77,9 +79,20 @@ public class BotMain extends TelegramLongPollingBot {
     private void callbackHandler(Update update) {
         UserCache userCache = getUserCache(update);
 
-        String button = update.getCallbackQuery().getData();
+        String[] inputDatas = update.getCallbackQuery().getData().split(";");
+        String className = CommandCatalog.valueOf(inputDatas[0]).getClassName();
+        String data = "";
+        if (inputDatas.length == 2) {
+            data = inputDatas[1];
+        }
+
+        userCache.getChatInfo().setCallbackData(CallbackData.builder()
+                .commandClass(className)
+                .data(data)
+                .build());
+
         try {
-            AbstractCommandImpl command = (AbstractCommandImpl) Class.forName(button).newInstance();
+            AbstractCommandImpl command = (AbstractCommandImpl) Class.forName(className).newInstance();
             ChatInfo chatInfo = command.execute(userCache.getChatInfo());
             sendMessageToUser(chatInfo.getCallbackMsg());
             userCache.setChatInfo(chatInfo);
