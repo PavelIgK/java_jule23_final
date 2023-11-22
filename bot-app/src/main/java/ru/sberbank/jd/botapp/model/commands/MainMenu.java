@@ -2,7 +2,6 @@ package ru.sberbank.jd.botapp.model.commands;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.sberbank.jd.botapp.model.ChatInfo;
-import ru.sberbank.jd.botapp.model.OrderInfo;
 import ru.sberbank.jd.botapp.model.menu.Menu;
 
 import java.util.ArrayList;
