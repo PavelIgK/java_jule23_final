@@ -1,24 +1,24 @@
 package ru.sberbank.jd.schedule.service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.sberbank.jd.dto.schedule.PerformerDto;
-import ru.sberbank.jd.dto.schedule.ProvidedServiceDto;
 import ru.sberbank.jd.dto.schedule.TimeSlotDto;
 import ru.sberbank.jd.schedule.entity.Order;
 import ru.sberbank.jd.schedule.entity.Schedule;
 import ru.sberbank.jd.schedule.repository.OrderRepository;
 import ru.sberbank.jd.schedule.repository.ScheduleRepository;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Сервис для получения свободных слотов в расписании.
  * Получает пересечения интервалов в расписании сотрудника и уже оформленных заказов.
- *
  */
 @Service
 @RequiredArgsConstructor
@@ -53,7 +53,8 @@ public class TimeSlotService {
      *
      * @param day - дата расчетного дня
      * @return - дату и время окончания суток
-     */    private Date getDayEnd(Date day) {
+     */
+    private Date getDayEnd(Date day) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(day);
         calendar.set(Calendar.HOUR_OF_DAY, 23);
@@ -66,16 +67,16 @@ public class TimeSlotService {
     /**
      * Получить список интервалов, доступных для записи в течение дня.
      *
-     * @param day - дата требуемого для записи дня
+     * @param day         - дата требуемого для записи дня
      * @param performerID - id исполнителя
-     * @param serviceId - id услуги
+     * @param serviceId   - id услуги
      * @return - список интервалов, доступных для записи
      */
     public List<TimeSlotDto> getFreeTimeSlots(Date day, UUID performerID, UUID serviceId) {
         Date dayStart = getDayStart(day);
         Date dayEnd = getDayEnd(day);
         List<Schedule> schedules = scheduleRepository.getSchedulesByPerformer_IdAndPeriod(performerID, dayStart, dayEnd);
-        List<Order> orders = orderRepository.getOrdersByPerformer_IdAndPeriod(performerID, dayStart,dayEnd);
+        List<Order> orders = orderRepository.getOrdersByPerformer_IdAndPeriod(performerID, dayStart, dayEnd);
         List<TimeSlotDto> timeSlots = new ArrayList<>();
 
         if (schedules.size() > 0) {
@@ -128,7 +129,7 @@ public class TimeSlotService {
             LocalDateTime end = begin.plusMinutes(seviceDuration);
             while (end.isBefore(timeSlotEnd) || end.isEqual(timeSlotEnd)) {
                 timeSlotsByMinInterval
-                        .add(new TimeSlotDto( Date.from(begin.atZone(ZoneId.systemDefault()).toInstant()),
+                        .add(new TimeSlotDto(Date.from(begin.atZone(ZoneId.systemDefault()).toInstant()),
                                 Date.from(end.atZone(ZoneId.systemDefault()).toInstant())));
                 begin = begin.plusMinutes(MIN_SERVICE_INTERVAL);
                 end = begin.plusMinutes(seviceDuration);
