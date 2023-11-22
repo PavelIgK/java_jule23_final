@@ -7,14 +7,14 @@ import ru.sberbank.jd.botapp.model.menu.Menu;
 /**
  * Команда выбора времени.
  */
-public class ChooseDate extends AbstractCommandImpl implements Command {
+public class ChoiseTime extends AbstractCommandImpl implements Command {
 
-    public ChooseDate() {
+    public ChoiseTime() {
         super();
         setCommandText("Выберите доступное время");
     }
 
-    public ChooseDate(String date) {
+    public ChoiseTime(String date) {
         this();
         setCommandName(date);
     }

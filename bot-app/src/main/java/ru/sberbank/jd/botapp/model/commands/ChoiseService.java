@@ -1,41 +1,38 @@
 package ru.sberbank.jd.botapp.model.commands;
 
-import java.util.ArrayList;
 import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.sberbank.jd.botapp.config.AppContextManager;
 import ru.sberbank.jd.botapp.model.ChatInfo;
+import ru.sberbank.jd.botapp.model.OrderInfo;
 import ru.sberbank.jd.botapp.model.menu.Menu;
-import ru.sberbank.jd.botapp.service.PerformerService;
+import java.util.ArrayList;
+import ru.sberbank.jd.botapp.service.ProvidedServiceService;
 
 /**
- * Команда выбора мастера.
+ * Команда записаться.
  */
-public class ChooseService extends AbstractCommandImpl implements Command {
+public class ChoiseService extends AbstractCommandImpl implements Command {
 
-    public ChooseService() {
+    public ChoiseService(){
         super();
         setPageNum(1);
-        setElemOnPage(8);
-        setCommandText("Выберите мастера");
+        setElemOnPage(4);
+        setCommandName("Записаться");
+        setCommandText("Выберите услугу");
     }
-
-    public ChooseService(String service) {
-        this();
-        setCommandName(service);
-    }
-
     @Override
     public ChatInfo execute(ChatInfo chatInfo) {
-
+        chatInfo.setOrderInfo(OrderInfo.builder().build());
+        setCommandText("Выберите услугу");
         ApplicationContext ctx = AppContextManager.getAppContext();
-        PerformerService performerService =  ctx.getBean(PerformerService.class);
+        ProvidedServiceService providedServiceService =  ctx.getBean(ProvidedServiceService.class);
 
         commands = new ArrayList<>();
-
-        performerService.findAllPerformers()
-                .forEach(performerDto -> commands.add(new ChoosePerformer(performerDto.getFirstName()
-                        + " "+ performerDto.getLastName())));
+        providedServiceService.findAllServices().forEach(it -> {
+            commands.add(new ChoisePerformer(it.getName(), it.getId().toString()));
+            setCommandText(getCommandText() + "\n" + it.getName() + " цена: " + it.getPrice() + "₽");
+        });
 
         SendMessage sendMessage = SendMessage.builder()
                 .chatId(chatInfo.getChatId())
@@ -47,6 +44,6 @@ public class ChooseService extends AbstractCommandImpl implements Command {
         chatInfo.getMenuCache().add(this);
 
         return chatInfo;
-    }
 
+    }
 }
