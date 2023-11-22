@@ -28,7 +28,7 @@ public class CreateOrder extends AbstractCommandImpl implements Command {
 
         commands = new ArrayList<>();
         providedServiceService.findAllServices().forEach(it -> {
-            commands.add(new ChooseService(it.getName()));
+            commands.add(new ChooseService(it.getName(), it.getId().toString()));
             setCommandText(getCommandText() + "\n" + it.getName() + " цена: " + it.getPrice() + "₽");
         });
 

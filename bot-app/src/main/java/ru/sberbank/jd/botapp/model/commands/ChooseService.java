@@ -1,6 +1,7 @@
 package ru.sberbank.jd.botapp.model.commands;
 
 import java.util.ArrayList;
+import java.util.UUID;
 import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.sberbank.jd.botapp.config.AppContextManager;
@@ -25,8 +26,16 @@ public class ChooseService extends AbstractCommandImpl implements Command {
         setCommandName(service);
     }
 
+    public ChooseService(String service, String dataToSend) {
+        this();
+        setCommandName(service);
+        setDataToSend(dataToSend);
+    }
+
     @Override
     public ChatInfo execute(ChatInfo chatInfo) {
+        String service = chatInfo.getCallbackData().getData();
+        chatInfo.getOrderInfo().setService(service);
 
         ApplicationContext ctx = AppContextManager.getAppContext();
         PerformerService performerService =  ctx.getBean(PerformerService.class);

@@ -2,6 +2,7 @@ package ru.sberbank.jd.botapp.model.commands;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.sberbank.jd.botapp.model.ChatInfo;
+import ru.sberbank.jd.botapp.model.OrderInfo;
 import ru.sberbank.jd.botapp.model.menu.Menu;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class MainMenu extends AbstractCommandImpl implements Command {
 
     @Override
     public ChatInfo execute(ChatInfo chatInfo) {
-
+        chatInfo.setOrderInfo(OrderInfo.builder().build());
         SendMessage sendMessage = SendMessage.builder()
                 .chatId(chatInfo.getChatId())
                 .text(this.getCommandText())
