@@ -24,7 +24,6 @@ public class MainMenu extends AbstractCommandImpl implements Command {
 
     @Override
     public ChatInfo execute(ChatInfo chatInfo) {
-        chatInfo.setOrderInfo(OrderInfo.builder().build());
         SendMessage sendMessage = SendMessage.builder()
                 .chatId(chatInfo.getChatId())
                 .text(this.getCommandText())

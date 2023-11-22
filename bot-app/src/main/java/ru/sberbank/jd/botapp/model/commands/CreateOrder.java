@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.sberbank.jd.botapp.config.AppContextManager;
 import ru.sberbank.jd.botapp.model.ChatInfo;
+import ru.sberbank.jd.botapp.model.OrderInfo;
 import ru.sberbank.jd.botapp.model.menu.Menu;
 import java.util.ArrayList;
 import ru.sberbank.jd.botapp.service.ProvidedServiceService;
@@ -22,6 +23,7 @@ public class CreateOrder extends AbstractCommandImpl implements Command {
     }
     @Override
     public ChatInfo execute(ChatInfo chatInfo) {
+        chatInfo.setOrderInfo(OrderInfo.builder().build());
         setCommandText("Выберите услугу");
         ApplicationContext ctx = AppContextManager.getAppContext();
         ProvidedServiceService providedServiceService =  ctx.getBean(ProvidedServiceService.class);
