@@ -14,10 +14,10 @@ import java.util.List;
  * Команда выбора даты.
  */
 
-public class ChoosePerformer extends AbstractCommandImpl implements Command {
+public class ChoiseDate extends AbstractCommandImpl implements Command {
 
     private String id;
-    public ChoosePerformer() {
+    public ChoiseDate() {
         super();
         setPageNum(1);
         setElemOnPage(8);
@@ -25,7 +25,7 @@ public class ChoosePerformer extends AbstractCommandImpl implements Command {
 
     }
 
-    public ChoosePerformer(String performerName) {
+    public ChoiseDate(String performerName) {
         this();
         setCommandName(performerName);
 
@@ -40,7 +40,7 @@ public class ChoosePerformer extends AbstractCommandImpl implements Command {
         c.setTime(dt);
         for (int i = 0; i < 14; i++) {
             dt = c.getTime();
-            commands.add(new ChooseDate(df.format(dt)));
+            commands.add(new ChoiseTime(df.format(dt)));
             c.add(Calendar.DATE, 1);
         }
 

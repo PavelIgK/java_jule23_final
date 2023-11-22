@@ -16,7 +16,7 @@ public class MainMenu extends AbstractCommandImpl implements Command {
         setCommandName("Главное меню");
         setCommandText("Вас приветствует барбершоп 'Господские стрижки'");
 
-        commands.add(new CreateOrder());
+        commands.add(new ChoiseService());
         commands.add(new MyOrders());
         commands.add(new Information());
     }

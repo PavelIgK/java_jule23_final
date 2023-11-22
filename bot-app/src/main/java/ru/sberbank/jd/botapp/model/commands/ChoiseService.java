@@ -12,9 +12,9 @@ import ru.sberbank.jd.botapp.service.ProvidedServiceService;
 /**
  * Команда записаться.
  */
-public class CreateOrder extends AbstractCommandImpl implements Command {
+public class ChoiseService extends AbstractCommandImpl implements Command {
 
-    public CreateOrder(){
+    public ChoiseService(){
         super();
         setPageNum(1);
         setElemOnPage(4);
@@ -30,7 +30,7 @@ public class CreateOrder extends AbstractCommandImpl implements Command {
 
         commands = new ArrayList<>();
         providedServiceService.findAllServices().forEach(it -> {
-            commands.add(new ChooseService(it.getName(), it.getId().toString()));
+            commands.add(new ChoisePerformer(it.getName(), it.getId().toString()));
             setCommandText(getCommandText() + "\n" + it.getName() + " цена: " + it.getPrice() + "₽");
         });
 

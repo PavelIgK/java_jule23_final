@@ -1,14 +1,20 @@
 package ru.sberbank.jd.botapp.utils;
 
+import java.util.Arrays;
 import lombok.Getter;
 
 @Getter
 public enum CommandCatalog {
+    //Menu
     MENU("ru.sberbank.jd.botapp.model.commands.MainMenu"),
-    CREATEORDER("ru.sberbank.jd.botapp.model.commands.CreateOrder"),
-    CHOOSESERVICE("ru.sberbank.jd.botapp.model.commands.ChooseService"),
-    CHOOSEPERFORMER("ru.sberbank.jd.botapp.model.commands.ChoosePerformer"),
-    CHOOSEDATE("ru.sberbank.jd.botapp.model.commands.ChooseDate"),
+
+    //User-Flow
+    CHOISESERVICE("ru.sberbank.jd.botapp.model.commands.ChoiseService"),
+    CHOISEPERFORMER("ru.sberbank.jd.botapp.model.commands.ChoisePerformer"),
+    CHOISEDATE("ru.sberbank.jd.botapp.model.commands.ChoiseDate"),
+    CHOISETIME("ru.sberbank.jd.botapp.model.commands.ChoiseTime"),
+
+    //Util command
     GOBACK("ru.sberbank.jd.botapp.model.commands.GoBack"),
     INFORMATION("ru.sberbank.jd.botapp.model.commands.Information"),
     LOCATION("ru.sberbank.jd.botapp.model.commands.Location"),
@@ -25,12 +31,10 @@ public enum CommandCatalog {
     }
 
     public static CommandCatalog valueOfClassName(String className) {
-        for (CommandCatalog e : values()) {
-            if (e.className.equals(className)) {
-                return e;
-            }
-        }
-        return null;
+        return Arrays.stream(values())
+                .filter(it -> it.className.equals(className))
+                .findFirst()
+                .orElse(null);
     }
 
 }
