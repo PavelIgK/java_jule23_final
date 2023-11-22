@@ -1,7 +1,6 @@
 package ru.sberbank.jd.botapp.model.commands;
 
 import java.util.ArrayList;
-import java.util.UUID;
 import org.springframework.context.ApplicationContext;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.sberbank.jd.botapp.config.AppContextManager;
@@ -12,21 +11,21 @@ import ru.sberbank.jd.botapp.service.PerformerService;
 /**
  * Команда выбора мастера.
  */
-public class ChooseService extends AbstractCommandImpl implements Command {
+public class ChoisePerformer extends AbstractCommandImpl implements Command {
 
-    public ChooseService() {
+    public ChoisePerformer() {
         super();
         setPageNum(1);
         setElemOnPage(8);
         setCommandText("Выберите мастера");
     }
 
-    public ChooseService(String service) {
+    public ChoisePerformer(String service) {
         this();
         setCommandName(service);
     }
 
-    public ChooseService(String service, String dataToSend) {
+    public ChoisePerformer(String service, String dataToSend) {
         this();
         setCommandName(service);
         setDataToSend(dataToSend);
@@ -43,7 +42,7 @@ public class ChooseService extends AbstractCommandImpl implements Command {
         commands = new ArrayList<>();
 
         performerService.findAllPerformers()
-                .forEach(performerDto -> commands.add(new ChoosePerformer(performerDto.getFirstName()
+                .forEach(performerDto -> commands.add(new ChoiseDate(performerDto.getFirstName()
                         + " "+ performerDto.getLastName())));
 
         SendMessage sendMessage = SendMessage.builder()
