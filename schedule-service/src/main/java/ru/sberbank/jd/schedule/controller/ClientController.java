@@ -48,6 +48,12 @@ public class ClientController {
         return clientService.getClientById(UUID.fromString(id));
     }
 
+    @GetMapping("/user/{id}")
+    @Operation(summary = "Получить клиента по UUID его user")
+    public ClientDto getByUserID(@PathVariable("id") String id) {
+        return clientService.getClientByUserId(UUID.fromString(id));
+    }
+
     @GetMapping
     @Operation(summary = "Получить всех клиентов")
     public List<ClientDto> getAll() {

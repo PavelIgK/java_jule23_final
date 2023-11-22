@@ -10,9 +10,9 @@ public interface UserCacheRepository {
 
     void save(UserCache userCache);
 
-    UserCache getById(Long id);
+    UserCache getByUserIdTelegram(Long id);
 
-    UserCache removeById(Long id);
+    UserCache removeByUserIdTelegram(Long id);
 
     List<UserCache> findAll();
     boolean contains(Long id);

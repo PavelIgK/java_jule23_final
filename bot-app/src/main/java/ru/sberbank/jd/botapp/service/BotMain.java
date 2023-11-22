@@ -141,7 +141,7 @@ public class BotMain extends TelegramLongPollingBot {
         Long userId = chatInfo.getUserId();
 
         if (userCacheRepository.contains(userId)) {
-            UserCache userCache = userCacheRepository.getById(chatInfo.getUserId());
+            UserCache userCache = userCacheRepository.getByUserIdTelegram(chatInfo.getUserId());
             userCache.getChatInfo().setChatId(chatInfo.getChatId());
             userCache.getChatInfo().setUserId(chatInfo.getUserId());
             userCache.getChatInfo().setMessageId(chatInfo.getMessageId());
@@ -162,6 +162,7 @@ public class BotMain extends TelegramLongPollingBot {
 
         assert userDto != null;
         return UserCache.builder()
+                .userId(userDto.getId().toString())
                 .userLogin(userDto.getLogin())
                 .userIdTelegram(Long.valueOf(userDto.getTelegramId()))
                 .createDateTime(LocalDateTime.now())

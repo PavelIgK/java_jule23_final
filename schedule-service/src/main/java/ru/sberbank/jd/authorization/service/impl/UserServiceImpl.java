@@ -15,6 +15,8 @@ import ru.sberbank.jd.authorization.repository.AuthorityRepository;
 import ru.sberbank.jd.authorization.repository.UserRepository;
 import ru.sberbank.jd.authorization.service.UserService;
 import ru.sberbank.jd.dto.authorization.UserDto;
+import ru.sberbank.jd.schedule.entity.Client;
+import ru.sberbank.jd.schedule.repository.ClientRepository;
 
 
 /**
@@ -31,6 +33,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private AuthorityRepository authorityRepository;
 
+    @Autowired
+    private ClientRepository clientRepository;
     /**
      * Получить всех пользователей.
      *
@@ -115,7 +119,11 @@ public class UserServiceImpl implements UserService {
                 .authority("CLIENT")
                 .user(user)
                 .build();
+        Client client = Client.builder()
+                .user(user)
+                .build();
         authorityRepository.save(authority);
+        clientRepository.save(client);
 
         return user.toDto();
     }

@@ -1,5 +1,5 @@
 create table schedule_schema.client (
-    id uuid not null,
+    id uuid not null default gen_random_uuid(),
     first_name varchar(255),
     last_name varchar(255),
     phone_number varchar(255),
