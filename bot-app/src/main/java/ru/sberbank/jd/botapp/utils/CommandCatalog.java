@@ -15,7 +15,7 @@ public enum CommandCatalog {
     MYORDERS("ru.sberbank.jd.botapp.model.commands.MyOrders"),
     SCROLLBACK("ru.sberbank.jd.botapp.model.commands.ScrollBack"),
     SCROLLFORWARD("ru.sberbank.jd.botapp.model.commands.ScrollForward"),
-    UNKRNOWN("ru.sberbank.jd.botapp.model.commands.Unknown");
+    UNKNOWN("ru.sberbank.jd.botapp.model.commands.Unknown");
 
 
     private final String className;
