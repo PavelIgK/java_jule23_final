@@ -13,7 +13,7 @@ import ru.sberbank.jd.dto.schedule.OrderDto;
 public class OrderService {
 
     private final BotConfig botConfig;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
     private String getUri(){
         return botConfig.getScheduleServiceUrl() + "/orders";

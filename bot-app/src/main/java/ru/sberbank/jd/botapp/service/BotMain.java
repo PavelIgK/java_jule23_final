@@ -29,13 +29,14 @@ public class BotMain extends TelegramLongPollingBot {
     private final BotConfig botConfig;
 
     private final UserCacheRepository userCacheRepository;
-    private RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
 
-    public BotMain(BotConfig botConfig, UserCacheRepository userCacheRepository) {
+    public BotMain(BotConfig botConfig, UserCacheRepository userCacheRepository, RestTemplate restTemplate) {
         super(botConfig.getToken());
         this.botConfig = botConfig;
         this.userCacheRepository = userCacheRepository;
+        this.restTemplate = restTemplate;
     }
 
     @Override

@@ -13,7 +13,7 @@ import ru.sberbank.jd.dto.schedule.TimeSlotDto;
 public class TimeSlotService {
 
     private final BotConfig botConfig;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
     private String getUri(){
         return botConfig.getScheduleServiceUrl() + "/timeslots";

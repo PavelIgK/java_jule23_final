@@ -1,9 +1,13 @@
 package ru.sberbank.jd.botapp.config;
 
+import java.time.Duration;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Конфиги.
@@ -24,4 +28,13 @@ public class BotConfig {
     String scheduleServiceUrl;
     @Value("${cache.lifetime.seconds}")
     Integer cacheLifetime;
+
+    @Bean
+    public RestTemplate getRestTemplate(RestTemplateBuilder restTemplateBuilder) {
+        //return new RestTemplate();
+        return restTemplateBuilder
+                .setConnectTimeout(Duration.ofSeconds(10))
+                .setReadTimeout(Duration.ofSeconds(10))
+                .build();
+    }
 }

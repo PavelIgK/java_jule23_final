@@ -7,14 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.sberbank.jd.botapp.config.BotConfig;
 import ru.sberbank.jd.dto.authorization.UserDto;
-import ru.sberbank.jd.dto.schedule.PerformerDto;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final BotConfig botConfig;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
     private String getUri(){
         return botConfig.getScheduleServiceUrl() + "/user";

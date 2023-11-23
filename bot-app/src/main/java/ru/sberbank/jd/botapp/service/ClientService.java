@@ -14,7 +14,7 @@ import ru.sberbank.jd.dto.schedule.PerformerDto;
 public class ClientService {
 
     private final BotConfig botConfig;
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
     private String getUri(){
         return botConfig.getScheduleServiceUrl() + "/clients";
