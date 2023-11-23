@@ -1,5 +1,6 @@
 create table schedule_schema.schedule_template (
-    id uuid not null, end_time time(6),
+    id uuid not null default gen_random_uuid(),
+    end_time time(6),
     schedule_name varchar(255),
     start_time time(6),
     performer_id uuid,

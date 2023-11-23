@@ -7,6 +7,7 @@ import ru.sberbank.jd.botapp.config.AppContextManager;
 import ru.sberbank.jd.botapp.model.ChatInfo;
 import ru.sberbank.jd.botapp.model.menu.Menu;
 import ru.sberbank.jd.botapp.service.PerformerService;
+import ru.sberbank.jd.botapp.utils.CommandCatalog;
 
 /**
  * Команда выбора мастера.
@@ -25,32 +26,34 @@ public class ChoisePerformer extends AbstractCommandImpl implements Command {
         setCommandName(service);
     }
 
-    public ChoisePerformer(String service, String dataToSend) {
+    public ChoisePerformer(String service, String serviceData) {
         this();
         setCommandName(service);
-        setDataToSend(dataToSend);
+        setDataToSend(serviceData);
     }
 
     @Override
     public ChatInfo execute(ChatInfo chatInfo) {
-        String service = chatInfo.getCallbackData().getData();
-        chatInfo.getOrderInfo().setService(service);
+        String serviceId = chatInfo.getCallbackData().getData();
+        if (!serviceId.isEmpty()) {
+            chatInfo.getOrderInfo().setServiceId(serviceId);
+        }
 
         ApplicationContext ctx = AppContextManager.getAppContext();
-        PerformerService performerService =  ctx.getBean(PerformerService.class);
+        PerformerService performerService = ctx.getBean(PerformerService.class);
 
         commands = new ArrayList<>();
 
         performerService.findAllPerformers()
-                .forEach(performerDto -> commands.add(new ChoiseDate(performerDto.getFirstName()
-                        + " "+ performerDto.getLastName())));
+                .forEach(it -> commands.add(new ChoiseDate(it.getFirstName()
+                        + " " + it.getLastName(), it.getId().toString())));
 
         SendMessage sendMessage = SendMessage.builder()
                 .chatId(chatInfo.getChatId())
                 .text(this.getCommandText())
                 .build();
 
-        chatInfo.setCallbackMsg(Menu.getKeyboard(chatInfo, sendMessage, Menu.createMenu(commands, 2),true, false));
+        chatInfo.setCallbackMsg(Menu.getKeyboard(chatInfo, sendMessage, Menu.createMenu(commands, 2), true, false));
 
         chatInfo.getMenuCache().add(this);
 

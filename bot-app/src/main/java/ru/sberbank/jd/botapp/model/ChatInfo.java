@@ -5,6 +5,7 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import ru.sberbank.jd.botapp.model.commands.AbstractCommandImpl;
 
 import java.util.ArrayList;
+import ru.sberbank.jd.dto.authorization.UserDto;
 
 @Data
 @Builder
@@ -17,5 +18,6 @@ public class ChatInfo {
     private ArrayList<AbstractCommandImpl> menuCache;
     private BotApiMethod callbackMsg;
     private CallbackData callbackData;
+    private UserDto client;
 
 }

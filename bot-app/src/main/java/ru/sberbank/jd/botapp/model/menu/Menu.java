@@ -35,7 +35,7 @@ public class Menu {
         ScrollForward scrollForward = new ScrollForward();
 
         String scrollBackCommand = CommandCatalog.SCROLLBACK.toString();
-        String scrollForwardCommand = CommandCatalog.SCROLLBACK.toString();
+        String scrollForwardCommand = CommandCatalog.SCROLLFORWARD.toString();
 
         bottomElem.add(InlineKeyboardButton.builder()
                 .text(scrollBack.getCommandName())

@@ -6,23 +6,26 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import ru.sberbank.jd.botapp.config.BotConfig;
-import ru.sberbank.jd.dto.schedule.TimeSlotDto;
+import ru.sberbank.jd.dto.authorization.UserDto;
+import ru.sberbank.jd.dto.schedule.PerformerDto;
 
 @Service
 @RequiredArgsConstructor
-public class TimeSlotService {
+public class UserService {
 
     private final BotConfig botConfig;
     private final RestTemplate restTemplate = new RestTemplate();
 
     private String getUri(){
-        return botConfig.getScheduleServiceUrl() + "/timeslots";
+        return botConfig.getScheduleServiceUrl() + "/user";
     }
 
-    public List<TimeSlotDto> getTimeSlots(String performerId, String dateStr, String serviceId) {
-        return Arrays.asList(restTemplate.getForObject(
-                String.format(getUri()+"?performer_id=%s&date=%s&service_id=%s",performerId, dateStr, serviceId),
-                TimeSlotDto[].class));
+    public List<UserDto> findAllUsers() {
+        return Arrays.asList(restTemplate.getForObject(getUri(), UserDto[].class));
+    }
+
+    public UserDto getUserByTelegramId(String id) {
+        return restTemplate.getForObject(getUri()+"/telegramId/"+id,UserDto.class);
     }
 
 }

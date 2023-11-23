@@ -26,6 +26,10 @@ public class ClientService {
         return clientRepository.findById(id).get().toDto();
     }
 
+    public ClientDto getClientByUserId(UUID id) {
+        return clientRepository.findClientByUserId(id).get().toDto();
+    }
+
     /**
      * Метод добавления клиента в репозиторий.
      *

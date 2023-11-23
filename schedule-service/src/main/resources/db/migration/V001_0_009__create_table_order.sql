@@ -1,5 +1,5 @@
 create table schedule_schema.order (
-    id uuid not null,
+    id uuid not null default gen_random_uuid(),
     client_id uuid,
     end_date_time timestamp(6),
     performer_id uuid,

@@ -18,12 +18,12 @@ public class UserCacheRepositoryImpl implements UserCacheRepository {
     }
 
     @Override
-    public UserCache getById(Long id) {
+    public UserCache getByUserIdTelegram(Long id) {
         return storage.get(id);
     }
 
     @Override
-    public UserCache removeById(Long id) {
+    public UserCache removeByUserIdTelegram(Long id) {
         return storage.remove(id);
     }
 

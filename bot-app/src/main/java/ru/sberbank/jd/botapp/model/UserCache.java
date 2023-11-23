@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder(toBuilder = true)
 public class UserCache {
+    private String userId;
     private Long userIdTelegram;
     private String userLogin;
     private String firstName;

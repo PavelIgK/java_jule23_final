@@ -1,5 +1,5 @@
 create table schedule_schema.authority (
-    id uuid not null,
+    id uuid not null default gen_random_uuid(),
     authority varchar(255),
     user_id uuid,
     primary key (id)
