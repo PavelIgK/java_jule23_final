@@ -17,7 +17,6 @@ public class OrderInfo {
     private String serviceId;
     private String date;
     private LocalDateTime startDateTime;
-
     private ClientDto client;
     private PerformerDto performer;
     private ProvidedServiceDto service;

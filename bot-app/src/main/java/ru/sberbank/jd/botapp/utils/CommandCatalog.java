@@ -14,7 +14,7 @@ public enum CommandCatalog {
     CHOISEDATE("ru.sberbank.jd.botapp.model.commands.ChoiseDate"),
     CHOISETIME("ru.sberbank.jd.botapp.model.commands.ChoiseTime"),
     CONFIRMORDER("ru.sberbank.jd.botapp.model.commands.ConfirmOrder"),
-
+    CONFIRM("ru.sberbank.jd.botapp.model.commands.Confirm"),
     //Util command
     GOBACK("ru.sberbank.jd.botapp.model.commands.GoBack"),
     INFORMATION("ru.sberbank.jd.botapp.model.commands.Information"),
