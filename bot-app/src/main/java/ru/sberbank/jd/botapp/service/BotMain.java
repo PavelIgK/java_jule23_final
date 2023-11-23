@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -11,6 +12,7 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.sberbank.jd.botapp.config.AppContextManager;
 import ru.sberbank.jd.botapp.config.BotConfig;
 import ru.sberbank.jd.botapp.model.CallbackData;
 import ru.sberbank.jd.botapp.model.ChatInfo;
@@ -21,6 +23,7 @@ import ru.sberbank.jd.botapp.model.commands.Unknown;
 import ru.sberbank.jd.botapp.repository.UserCacheRepository;
 import ru.sberbank.jd.botapp.utils.CommandCatalog;
 import ru.sberbank.jd.dto.authorization.UserDto;
+import ru.sberbank.jd.dto.schedule.ClientDto;
 
 @Slf4j
 @Component
@@ -175,15 +178,29 @@ public class BotMain extends TelegramLongPollingBot {
 
     public UserDto createUser(Update update) {
         Long userId = getChatInfo(update).getUserId();
-        String url = botConfig.getScheduleServiceUrl() + "/user";
-
+        String urlCreateUser = botConfig.getScheduleServiceUrl() + "/user";
+        String urlGetClient = botConfig.getScheduleServiceUrl() + "/client/user";
+        String login = update.getMessage().getFrom().getUserName();
         UserDto userDtoCreated = UserDto.builder()
-                .login(userId.toString())
+                .login(login == null ? userId.toString() : login)
                 .telegramId(userId.toString())
                 .enabled(true)
                 .build();
+        //UserDto userDto = restTemplate.
+        userDtoCreated = restTemplate.postForObject(urlCreateUser, userDtoCreated, UserDto.class);
 
-        return restTemplate.postForObject(url, userDtoCreated, UserDto.class);
+        ApplicationContext ctx = AppContextManager.getAppContext();
+        ClientService clientService = ctx.getBean(ClientService.class);
+        //Получаем клиента для созданного юзера
+        ClientDto clientCreated = clientService.getClientByUserId(userDtoCreated.getId().toString());
+        //Обновляем данные по нему
+        clientCreated.setFirstName(update.getMessage().getFrom().getFirstName());
+        clientCreated.setLastName(update.getMessage().getFrom().getLastName());
+        //обновляем клиента
+        String urlUpdateClient = botConfig.getScheduleServiceUrl() + "/clients/" + clientCreated.getId();
+        restTemplate.put(urlUpdateClient, clientCreated);
+
+        return userDtoCreated;
     }
 
 }
