@@ -20,7 +20,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, UUID> {
 
 
     @Query("select s from Schedule s where s.performer.id = :performer_id "
-            + "and s.startDateTime >= :begin and s.endDateTime <= :end")
+            + "and s.startDateTime >= :begin and s.endDateTime <= :end order by s.startDateTime")
     List<Schedule> getSchedulesByPerformer_IdAndPeriod(
             @Param("performer_id") UUID performerId,
             @Param("begin") Date begin,

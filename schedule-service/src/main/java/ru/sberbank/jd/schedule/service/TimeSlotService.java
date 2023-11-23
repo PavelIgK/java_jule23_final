@@ -103,6 +103,12 @@ public class TimeSlotService {
                             startDate = orders.get(currOrder).getEndDateTime();
                             endDate = startDate;
                             currOrder++;
+                        } else {
+                            if (endDate.equals(orders.get(currOrder).getStartDateTime())) {
+                                startDate = orders.get(currOrder).getEndDateTime();
+                                endDate = startDate;
+                                currOrder++;
+                            }
                         }
                     } else {
                         endDate = schedules.get(currSchedule).getEndDateTime();

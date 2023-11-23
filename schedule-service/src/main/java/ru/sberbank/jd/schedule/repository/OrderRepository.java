@@ -23,7 +23,7 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
     List<Order> getOrderByPerformer_Id(UUID performerId);
 
     @Query("select o from Order o where o.performer.id = :performer_id "
-            + "and o.startDateTime >= :begin and o.endDateTime <= :end")
+            + "and o.startDateTime >= :begin and o.endDateTime <= :end order by o.startDateTime")
     List<Order> getOrdersByPerformer_IdAndPeriod(
             @Param("performer_id") UUID performerId,
             @Param("begin") Date begin,
