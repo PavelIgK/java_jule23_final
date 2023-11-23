@@ -15,6 +15,7 @@ import java.util.UUID;
 @RequestMapping("/orders")
 @Tag(name = "Заказы услуг", description = "Взаимодействие с заказами")
 public class OrderController {
+
     private final OrderService orderService;
 
     @PostMapping
@@ -33,6 +34,13 @@ public class OrderController {
     @Operation(summary = "Получить заказ по UUID")
     public OrderDto get(@PathVariable("id") String id) {
         return orderService.getOrderById(UUID.fromString(id));
+    }
+
+    @GetMapping("/client")
+    @Operation(summary = "Получить заказы по UUID клиента")
+    public List<OrderDto> get(@RequestParam("id") String id,
+            @RequestParam("isActive") String isActive) {
+        return orderService.getOrdersByClient(UUID.fromString(id), Boolean.valueOf(isActive));
     }
 
     @GetMapping

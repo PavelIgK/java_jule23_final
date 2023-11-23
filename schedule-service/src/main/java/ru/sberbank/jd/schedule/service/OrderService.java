@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.sberbank.jd.dto.schedule.OrderDto;
@@ -34,11 +35,15 @@ public class OrderService {
      * @param onlyActive только активные
      * @return список заказов
      */
-    public List<Order> getOrdersByClient(UUID clientId, Boolean onlyActive) {
+    public List<OrderDto> getOrdersByClient(UUID clientId, Boolean onlyActive) {
         if (onlyActive) {
-            return orderRepository.getOrderByClient_IdAndStartDateTimeAfter(clientId, new Date());
+            return orderRepository.getOrderByClient_IdAndStartDateTimeAfter(clientId, new Date())
+                    .stream().map(it -> it.toDto())
+                    .collect(Collectors.toList());
         } else {
-            return orderRepository.getOrderByClient_Id(clientId);
+            return orderRepository.getOrderByClient_Id(clientId)
+                    .stream().map(it -> it.toDto())
+                    .collect(Collectors.toList());
         }
     }
 
