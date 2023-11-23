@@ -2,6 +2,7 @@ package ru.sberbank.jd.botapp.service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -25,6 +26,14 @@ public class OrderService {
 
     public List<OrderDto> findOrdersByClient(String id) {
         return Arrays.asList(restTemplate.getForObject(getUri()+"/"+id, OrderDto[].class));
+    }
+
+    public void addOrder(OrderDto orderDto) {
+        restTemplate.postForEntity(getUri(), orderDto, OrderDto.class);
+    }
+
+    public void deleteOrderById(String id) {
+        restTemplate.delete(getUri()+"/"+id);
     }
 
 }
