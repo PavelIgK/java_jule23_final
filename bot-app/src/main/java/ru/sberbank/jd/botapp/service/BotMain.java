@@ -12,7 +12,6 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.sberbank.jd.botapp.config.BotConfig;
-import ru.sberbank.jd.botapp.config.ConfigurationRepository;
 import ru.sberbank.jd.botapp.model.CallbackData;
 import ru.sberbank.jd.botapp.model.ChatInfo;
 import ru.sberbank.jd.botapp.model.UserCache;
@@ -29,13 +28,14 @@ public class BotMain extends TelegramLongPollingBot {
 
     private final BotConfig botConfig;
 
-    UserCacheRepository userCacheRepository = new ConfigurationRepository().userCacheRepository();
+    private final UserCacheRepository userCacheRepository;
     private RestTemplate restTemplate = new RestTemplate();
 
 
-    public BotMain(BotConfig botConfig) {
+    public BotMain(BotConfig botConfig, UserCacheRepository userCacheRepository) {
         super(botConfig.getToken());
         this.botConfig = botConfig;
+        this.userCacheRepository = userCacheRepository;
     }
 
     @Override
@@ -96,6 +96,7 @@ public class BotMain extends TelegramLongPollingBot {
             ChatInfo chatInfo = command.execute(userCache.getChatInfo());
             sendMessageToUser(chatInfo.getCallbackMsg());
             userCache.setChatInfo(chatInfo);
+            userCache.setCreateDateTime(LocalDateTime.now());
             userCacheRepository.save(userCache);
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {

@@ -22,5 +22,6 @@ public class BotConfig {
     Double orgLat;
     @Value("http://${schedule.service.url}:${schedule.service.port}")
     String scheduleServiceUrl;
-
+    @Value("${cache.lifetime.seconds}")
+    Integer cacheLifetime;
 }
