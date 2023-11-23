@@ -1,5 +1,6 @@
 package ru.sberbank.jd.schedule.service;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -21,7 +22,11 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     public List<OrderDto> getAllOrders() {
-        return orderRepository.findAll().stream().map(Order::toDto).toList();
+        return orderRepository.findAll().stream().map(Order::toDto).sorted(new Comparator<OrderDto>() {
+            public int compare(OrderDto o1, OrderDto o2) {
+                return o1.getStartDateTime().compareTo(o2.getStartDateTime());
+            }
+        }).toList();
     }
 
     public OrderDto getOrderById(UUID id) {
