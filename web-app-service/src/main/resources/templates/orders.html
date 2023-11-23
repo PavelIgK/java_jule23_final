@@ -17,6 +17,7 @@
             <th scope="col">Время окончания</th>
             <th scope="col">Клиент</th>
             <th scope="col">Специалист</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -26,6 +27,9 @@
             <td th:text="*{#dates.format(order.endDateTime, 'dd.MM.yyyy HH:mm')}"/>
             <td th:text="${order.client.user.login}"/>
             <td th:text="${order.performer.user.login}"/>
+            <td>
+                <a th:href="@{/orders/delete/{id}(id=${order.id})}" class="btn btn-secondary">Удалить</a>
+            </td>
         </tr>
         </tbody>
     </table>

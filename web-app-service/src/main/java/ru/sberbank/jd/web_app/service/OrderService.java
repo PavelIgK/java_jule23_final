@@ -23,4 +23,8 @@ public class OrderService {
     public List<OrderDto> findAllOrders() {
         return Arrays.asList(restTemplate.getForObject(getUri(), OrderDto[].class));
     }
+
+    public void deleteOrderById(String id) {
+        restTemplate.delete(getUri()+"/"+id);
+    }
 }
