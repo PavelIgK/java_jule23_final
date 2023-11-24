@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Главное меню.
+ *
  */
 public class MainMenu extends AbstractCommandImpl implements Command {
 

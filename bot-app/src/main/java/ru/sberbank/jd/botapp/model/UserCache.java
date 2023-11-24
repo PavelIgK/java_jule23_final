@@ -6,6 +6,10 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * Кэш пользователя.
+ *
+ */
 @Data
 @Builder(toBuilder = true)
 public class UserCache {

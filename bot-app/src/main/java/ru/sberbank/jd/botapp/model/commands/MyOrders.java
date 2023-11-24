@@ -20,6 +20,7 @@ import ru.sberbank.jd.dto.schedule.OrderDto;
 
 /**
  * Команда текущие заказы.
+ *
  */
 public class MyOrders extends AbstractCommandImpl implements Command {
 

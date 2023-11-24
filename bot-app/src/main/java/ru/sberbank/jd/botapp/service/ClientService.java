@@ -9,6 +9,10 @@ import ru.sberbank.jd.botapp.config.BotConfig;
 import ru.sberbank.jd.dto.schedule.ClientDto;
 import ru.sberbank.jd.dto.schedule.PerformerDto;
 
+/**
+ * Сервис для получения клиентов.
+ *
+ */
 @Service
 @RequiredArgsConstructor
 public class ClientService {
@@ -20,14 +24,30 @@ public class ClientService {
         return botConfig.getScheduleServiceUrl() + "/clients";
     }
 
+    /**
+     * Получение всех клиентов.
+     *
+     * @return List<ClientDto>
+     */
     public List<ClientDto> findAllClients() {
         return Arrays.asList(restTemplate.getForObject(getUri(), ClientDto[].class));
     }
 
+    /**
+     * Получение клиента по uuid.
+     *
+     * @param id uuid.
+     * @return ClientDto
+     */
     public ClientDto getClientById(String id) {
         return restTemplate.getForObject(getUri()+"/"+id,ClientDto.class);
     }
 
+    /**
+     * Получение клиента по uuid его юзера.
+     * @param id uuid
+     * @return ClientDto
+     */
     public ClientDto getClientByUserId(String id) {
         return restTemplate.getForObject(getUri()+"/user/"+id,ClientDto.class);
     }

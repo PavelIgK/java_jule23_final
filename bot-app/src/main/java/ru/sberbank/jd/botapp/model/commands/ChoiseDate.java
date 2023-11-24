@@ -14,6 +14,7 @@ import ru.sberbank.jd.botapp.utils.CommandCatalog;
 
 /**
  * Команда выбора даты.
+ *
  */
 
 public class ChoiseDate extends AbstractCommandImpl implements Command {

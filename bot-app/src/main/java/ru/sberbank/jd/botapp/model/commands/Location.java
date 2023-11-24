@@ -5,7 +5,8 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import ru.sberbank.jd.botapp.model.ChatInfo;
 
 /**
- * Команда информация.
+ * Команда локация.
+ *
  */
 public class Location extends AbstractCommandImpl implements Command {
 

@@ -11,6 +11,7 @@ import ru.sberbank.jd.botapp.utils.CommandCatalog;
 
 /**
  * Команда выбора мастера.
+ *
  */
 public class ChoisePerformer extends AbstractCommandImpl implements Command {
 

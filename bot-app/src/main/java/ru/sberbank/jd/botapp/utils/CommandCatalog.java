@@ -3,6 +3,9 @@ package ru.sberbank.jd.botapp.utils;
 import java.util.Arrays;
 import lombok.Getter;
 
+/**
+ * Список команд и их классов.
+ */
 @Getter
 public enum CommandCatalog {
     //Menu
@@ -31,6 +34,12 @@ public enum CommandCatalog {
         this.className = value;
     }
 
+    /**
+     * ПОлучение enum команды по ее классу.
+     *
+     * @param className класс команды.
+     * @return CommandCatalog
+     */
     public static CommandCatalog valueOfClassName(String className) {
         return Arrays.stream(values())
                 .filter(it -> it.className.equals(className))

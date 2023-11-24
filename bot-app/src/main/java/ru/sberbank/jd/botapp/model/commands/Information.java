@@ -6,6 +6,7 @@ import ru.sberbank.jd.botapp.model.menu.Menu;
 
 /**
  * Команда информация.
+ *
  */
 public class Information extends AbstractCommandImpl implements Command {
     public Information() {

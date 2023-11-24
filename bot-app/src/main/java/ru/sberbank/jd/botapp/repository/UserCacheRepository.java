@@ -4,7 +4,8 @@ import ru.sberbank.jd.botapp.model.UserCache;
 import java.util.List;
 
 /**
- * Интерфейс хранилища.
+ * Интерфейс хранилища для кэша пользователей.
+ *
  */
 public interface UserCacheRepository {
 

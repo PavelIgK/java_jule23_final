@@ -14,7 +14,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
- * Команда информация.
+ * Команда "Назад" для паджинации.
+ *
  */
 @Slf4j
 public class ScrollBack extends AbstractCommandImpl implements Command {
