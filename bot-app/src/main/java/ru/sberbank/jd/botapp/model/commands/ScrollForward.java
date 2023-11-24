@@ -11,7 +11,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
- * Команда информация.
+ * Команда "вперед" для паджинации.
+ *
  */
 public class ScrollForward extends AbstractCommandImpl implements Command {
     public ScrollForward() {

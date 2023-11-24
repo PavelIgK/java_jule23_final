@@ -9,7 +9,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import ru.sberbank.jd.botapp.model.CallbackData;
 import ru.sberbank.jd.botapp.model.ChatInfo;
 import ru.sberbank.jd.botapp.model.commands.AbstractCommandImpl;
 import ru.sberbank.jd.botapp.model.commands.GoBack;
@@ -23,6 +22,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import ru.sberbank.jd.botapp.utils.CommandCatalog;
 
+/**
+ * Сборка кнопок меню.
+ *
+ */
 @Data
 @NoArgsConstructor
 public class Menu {
@@ -65,6 +68,13 @@ public class Menu {
         return menu;
     }
 
+    /**
+     * Создание меню.
+     *
+     * @param commands список команд.
+     * @param btnInLine количество кнопок в ряде
+     * @return List<List<InlineKeyboardButton>>
+     */
     public static List<List<InlineKeyboardButton>> createMenu(List<AbstractCommandImpl> commands, int btnInLine) {
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -88,6 +98,16 @@ public class Menu {
         return new ArrayList<>(mapOfChunks.values());
     }
 
+    /**
+     * Создание клавиатуры.
+     *
+     * @param chatInfo информация о текущем чате
+     * @param sendMessage текст сообщения для отправки
+     * @param menu кнопки меню
+     * @param addBackBtn добавлять ли кнопку назад
+     * @param pagination нужна ли паджинация
+     * @return BotApiMethod
+     */
     public static BotApiMethod getKeyboard(ChatInfo chatInfo, SendMessage sendMessage,
             List<List<InlineKeyboardButton>> menu, boolean addBackBtn, boolean pagination) {
         BotApiMethod callback = null;

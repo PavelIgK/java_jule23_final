@@ -18,6 +18,7 @@ import ru.sberbank.jd.dto.authorization.UserDto;
 
 /**
  * Команда выбора времени.
+ *
  */
 @Slf4j
 public class ChoiseTime extends AbstractCommandImpl implements Command {

@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * Конфиги.
+ * Конфиги для приложения.
+ *
  */
 @Data
 @Component

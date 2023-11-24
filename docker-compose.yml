@@ -23,11 +23,13 @@ services:
       args:
         buildno: 001
     environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/schedule_db
       - SERVER_PORT=8080
       - SCHEDULE_SERVICE_URL=schedule
       - SCHEDULE_SERVICE_PORT=8081
     depends_on:
           - schedule-service
+          - db
     ports:
       - 8080:8080
 

@@ -13,6 +13,7 @@ import ru.sberbank.jd.botapp.service.BotMain;
 
 /**
  * Инициализация бота.
+ *
  */
 @Component
 @Slf4j

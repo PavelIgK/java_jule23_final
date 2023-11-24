@@ -20,7 +20,8 @@ import ru.sberbank.jd.dto.schedule.PerformerDto;
 import ru.sberbank.jd.dto.schedule.ProvidedServiceDto;
 
 /**
- * Команда выбора даты.
+ * Команда для кнопки "Подтвердить".
+ *
  */
 
 public class Confirm extends AbstractCommandImpl implements Command {

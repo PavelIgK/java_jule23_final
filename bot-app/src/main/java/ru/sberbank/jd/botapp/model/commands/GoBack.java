@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Команда информация.
+ * Команда назад.
+ *
  */
 public class GoBack extends AbstractCommandImpl implements Command {
     public GoBack() {

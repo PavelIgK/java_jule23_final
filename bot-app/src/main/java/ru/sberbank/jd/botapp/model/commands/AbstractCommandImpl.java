@@ -8,6 +8,11 @@ import ru.sberbank.jd.botapp.model.ChatInfo;
 
 import java.util.ArrayList;
 
+/**
+ * Абстрактный клас для команд.
+ * Реализует интерфейс команды.
+ *
+ */
 @Data
 @Slf4j
 public abstract class AbstractCommandImpl implements Command {

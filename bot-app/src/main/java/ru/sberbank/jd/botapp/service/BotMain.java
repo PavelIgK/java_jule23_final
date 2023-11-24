@@ -25,6 +25,10 @@ import ru.sberbank.jd.botapp.utils.CommandCatalog;
 import ru.sberbank.jd.dto.authorization.UserDto;
 import ru.sberbank.jd.dto.schedule.ClientDto;
 
+/**
+ * Создание бота.
+ *
+ */
 @Slf4j
 @Component
 public class BotMain extends TelegramLongPollingBot {
@@ -176,6 +180,12 @@ public class BotMain extends TelegramLongPollingBot {
                 .build();
     }
 
+    /**
+     * Создание юзера и клиента для него.
+     *
+     * @param update
+     * @return UserDto
+     */
     public UserDto createUser(Update update) {
         Long userId = getChatInfo(update).getUserId();
         String urlCreateUser = botConfig.getScheduleServiceUrl() + "/user";

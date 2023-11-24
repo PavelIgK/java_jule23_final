@@ -12,6 +12,7 @@ import ru.sberbank.jd.botapp.service.ProvidedServiceService;
 
 /**
  * Команда записаться.
+ *
  */
 public class ChoiseService extends AbstractCommandImpl implements Command {
 

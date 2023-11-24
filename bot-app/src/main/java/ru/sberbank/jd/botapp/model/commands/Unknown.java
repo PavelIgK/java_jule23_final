@@ -7,7 +7,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.sberbank.jd.botapp.model.ChatInfo;
 
 /**
- * Команда услуг для мужчин.
+ * Команда "неизвестная команда".
+ *
  */
 @Getter
 @Setter

@@ -7,6 +7,10 @@ import ru.sberbank.jd.botapp.model.commands.AbstractCommandImpl;
 import java.util.ArrayList;
 import ru.sberbank.jd.dto.authorization.UserDto;
 
+/**
+ * Информация о текущем чате.
+ *
+ */
 @Data
 @Builder
 public class ChatInfo {
