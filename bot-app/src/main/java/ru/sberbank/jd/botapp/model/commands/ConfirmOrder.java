@@ -30,6 +30,7 @@ import ru.sberbank.jd.dto.schedule.ProvidedServiceDto;
 
 /**
  * Команда выбора даты.
+ *
  */
 
 public class ConfirmOrder extends AbstractCommandImpl implements Command {

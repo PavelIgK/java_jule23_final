@@ -8,6 +8,9 @@ import org.springframework.web.client.RestTemplate;
 import ru.sberbank.jd.botapp.config.BotConfig;
 import ru.sberbank.jd.dto.authorization.UserDto;
 
+/**
+ * Получение юзера.
+ */
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -19,10 +22,21 @@ public class UserService {
         return botConfig.getScheduleServiceUrl() + "/user";
     }
 
+    /**
+     * Получение всех юзеров.
+     *
+     * @return List<UserDto>
+     */
     public List<UserDto> findAllUsers() {
         return Arrays.asList(restTemplate.getForObject(getUri(), UserDto[].class));
     }
 
+    /**
+     * Получение юзера по его telegramId.
+     *
+     * @param id telegramId
+     * @return UserDto
+     */
     public UserDto getUserByTelegramId(String id) {
         return restTemplate.getForObject(getUri()+"/telegramId/"+id,UserDto.class);
     }

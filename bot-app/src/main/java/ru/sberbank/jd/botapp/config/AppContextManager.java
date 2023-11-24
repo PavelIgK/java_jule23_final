@@ -4,6 +4,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+/**
+ * Конфигурируем контекст.
+ *
+ */
 @Component
 public class AppContextManager implements ApplicationContextAware {
     private static ApplicationContext _appCtx;

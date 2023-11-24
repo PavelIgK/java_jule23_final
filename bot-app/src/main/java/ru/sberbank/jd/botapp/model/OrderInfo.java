@@ -8,6 +8,10 @@ import ru.sberbank.jd.dto.schedule.ClientDto;
 import ru.sberbank.jd.dto.schedule.PerformerDto;
 import ru.sberbank.jd.dto.schedule.ProvidedServiceDto;
 
+/**
+ * Информация о текущем заказе.
+ *
+ */
 @Data
 @Builder
 public class OrderInfo {

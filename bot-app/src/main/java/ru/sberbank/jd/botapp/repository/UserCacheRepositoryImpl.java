@@ -13,7 +13,8 @@ import java.util.*;
 
 
 /**
- * Реализация хранилища.
+ * Реализация хранилища для кэша пользователей.
+ *
  */
 @Component
 @RequiredArgsConstructor
