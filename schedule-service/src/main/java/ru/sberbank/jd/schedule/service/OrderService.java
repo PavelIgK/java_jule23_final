@@ -22,11 +22,11 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     public List<OrderDto> getAllOrders() {
-        return orderRepository.findAll().stream().map(Order::toDto).sorted(new Comparator<OrderDto>() {
-            public int compare(OrderDto o1, OrderDto o2) {
-                return o1.getStartDateTime().compareTo(o2.getStartDateTime());
-            }
-        }).toList();
+        return orderRepository.findAll()
+                .stream()
+                .map(Order::toDto)
+                .sorted((o1, o2) -> o1.getStartDateTime().compareTo(o2.getStartDateTime()))
+                .toList();
     }
 
     public OrderDto getOrderById(UUID id) {
@@ -44,11 +44,13 @@ public class OrderService {
         if (onlyActive) {
             return orderRepository.getOrderByClient_IdAndStartDateTimeAfter(clientId, new Date())
                     .stream().map(it -> it.toDto())
-                    .collect(Collectors.toList());
+                    .sorted((o1, o2) -> o1.getStartDateTime().compareTo(o2.getStartDateTime()))
+                    .toList();
         } else {
             return orderRepository.getOrderByClient_Id(clientId)
                     .stream().map(it -> it.toDto())
-                    .collect(Collectors.toList());
+                    .sorted((o1, o2) -> o1.getStartDateTime().compareTo(o2.getStartDateTime()))
+                    .toList();
         }
     }
 

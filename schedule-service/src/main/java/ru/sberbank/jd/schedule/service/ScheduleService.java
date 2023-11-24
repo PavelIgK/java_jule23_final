@@ -18,7 +18,11 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
     public List<ScheduleDto> getAllSchedule() {
-        return scheduleRepository.findAll().stream().map(Schedule::toDto).toList();
+        return scheduleRepository.findAll()
+                .stream()
+                .map(Schedule::toDto)
+                .sorted((o1, o2) -> o1.getStartDateTime().compareTo(o2.getStartDateTime()))
+                .toList();
     }
 
     public ScheduleDto getScheduleById(UUID id) {
@@ -26,7 +30,11 @@ public class ScheduleService {
     }
 
     public List<ScheduleDto> getScheduleByPerformerId(UUID id) {
-        return scheduleRepository.getSchedulesByPerformer_Id(id).stream().map(Schedule::toDto).toList();
+        return scheduleRepository.getSchedulesByPerformer_Id(id)
+                .stream()
+                .map(Schedule::toDto)
+                .sorted((o1, o2) -> o1.getStartDateTime().compareTo(o2.getStartDateTime()))
+                .toList();
     }
 
     public ScheduleDto addSchedule(ScheduleDto scheduleDto) {
