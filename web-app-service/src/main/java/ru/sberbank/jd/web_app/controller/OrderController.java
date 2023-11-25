@@ -11,6 +11,9 @@ import ru.sberbank.jd.web_app.service.OrderService;
 
 import java.util.List;
 
+/**
+ * Контроллер для обработки запросов о заказах.
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/orders")
@@ -18,6 +21,12 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    /**
+     * Получить инфо по всем заказам.
+     *
+     * @param model модель
+     * @return шаблон со списком всех заказов
+     */
     @GetMapping
     public String getAllOrders(Model model) {
         List<OrderDto> orderDtoList = orderService.findAllOrders();
@@ -25,6 +34,12 @@ public class OrderController {
         return "orders";
     }
 
+    /**
+     * Удалить инфо о заказе.
+     *
+     * @param id id заказа
+     * @return страницу со всеми заказами
+     */
     @GetMapping("/delete/{id}")
     public String deleteOrder(@PathVariable(value = "id") String id) {
         orderService.deleteOrderById(id);

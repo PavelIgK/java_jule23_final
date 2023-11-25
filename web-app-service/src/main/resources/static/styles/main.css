@@ -3,3 +3,16 @@ body.main_page {
     background-repeat: no-repeat;
     background-size: 100%;
 }
+
+.btn-success {
+    margin: 15px 0 30px 0;
+    width: 125px;
+}
+
+a.nav-link {
+    border-radius: 10px;
+}
+
+a.nav-link:hover {
+    background-color: #e7e7e7;
+}

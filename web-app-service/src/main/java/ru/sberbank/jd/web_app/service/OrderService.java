@@ -9,6 +9,10 @@ import ru.sberbank.jd.web_app.config.WebAppConfig;
 
 import java.util.List;
 
+/**
+ * Сервис для получения инфо о заказах.
+ *
+ */
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -20,10 +24,20 @@ public class OrderService {
         return "http://" + webAppConfig.getScheduleServiceUrl() + ":" + webAppConfig.getScheduleServicePort() + "/orders";
     }
 
+    /**
+     * Получить все заказы.
+     *
+     * @return список всех заказов
+     */
     public List<OrderDto> findAllOrders() {
         return Arrays.asList(restTemplate.getForObject(getUri(), OrderDto[].class));
     }
 
+    /**
+     * Удалить заказ по id.
+     *
+     * @param id id заказа
+     */
     public void deleteOrderById(String id) {
         restTemplate.delete(getUri()+"/"+id);
     }

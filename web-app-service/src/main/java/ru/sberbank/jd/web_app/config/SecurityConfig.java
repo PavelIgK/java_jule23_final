@@ -16,6 +16,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
+/**
+ * Конфиг для аутентификации.
+ *
+ */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor

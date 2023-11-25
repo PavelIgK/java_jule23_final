@@ -14,6 +14,10 @@ import ru.sberbank.jd.dto.schedule.ScheduleDto;
 import ru.sberbank.jd.web_app.service.PerformerService;
 import ru.sberbank.jd.web_app.service.ScheduleService;
 
+/**
+ * Контроллер для обработки запросов о графике работы.
+ *
+ */
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/schedules")
@@ -22,6 +26,12 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
     private final PerformerService performerService;
 
+    /**
+     * Получить все расписания.
+     *
+     * @param model модель
+     * @return шаблон со списком всех графиков работы
+     */
     @GetMapping
     public String getAllSchedules(Model model) {
         List<ScheduleDto> schedulesDtoList = scheduleService.findAllSchedules();
@@ -29,6 +39,12 @@ public class ScheduleController {
         return "schedules";
     }
 
+    /**
+     * Отобразить страницу для создания нового графика.
+     *
+     * @param model модель
+     * @return шаблон для создания нового графика
+     */
     @GetMapping("/create")
     public String showCreateScheduleForm(Model model) {
         model.addAttribute("schedule", ScheduleDto.builder().build());
@@ -36,6 +52,12 @@ public class ScheduleController {
         return "schedule_create";
     }
 
+    /**
+     * Создать новый график.
+     *
+     * @param scheduleDto инфо о графике
+     * @return шаблон со списком всех графиков
+     */
     @PostMapping
     public String createSchedule(@ModelAttribute("schedule") ScheduleDto scheduleDto) {
         PerformerDto performerDto = performerService.getPerformerById(scheduleDto.getPerformer().getId().toString());
@@ -44,6 +66,13 @@ public class ScheduleController {
         return "redirect:/schedules";
     }
 
+    /**
+     * Отобразить страницу для редактирования графика работы.
+     *
+     * @param id id графика
+     * @param model модель
+     * @return шаблон для редактирования графика работы
+     */
     @GetMapping("/update/{id}")
     public String showUpdateScheduleForm(@PathVariable(value = "id") String id, Model model) {
         ScheduleDto scheduleDto = scheduleService.getScheduleById(id);
@@ -53,6 +82,12 @@ public class ScheduleController {
         return "schedule_update";
     }
 
+    /**
+     * Обновить инфо о графике работы.
+     *
+     * @param scheduleDto инфо о графике
+     * @return шаблон со списком всех графиков
+     */
     @PostMapping("/update")
     public String updateSchedule(@ModelAttribute("schedule") ScheduleDto scheduleDto) {
         PerformerDto performerDto = performerService.getPerformerById(scheduleDto.getPerformer().getId().toString());
@@ -61,6 +96,12 @@ public class ScheduleController {
         return "redirect:/schedules";
     }
 
+    /**
+     * Удалить график работы.
+     *
+     * @param id id графика
+     * @return шаблон со списком всех графиков
+     */
     @GetMapping("/delete/{id}")
     public String deleteSchedule(@PathVariable(value = "id") String id) {
         scheduleService.deleteScheduleById(id);
