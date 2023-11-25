@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Конфиг для приложения.
+ *
+ */
 @Data
 @Component
 @ConfigurationProperties("application.properties")

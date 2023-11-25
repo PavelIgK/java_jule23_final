@@ -8,6 +8,9 @@ import ru.sberbank.jd.dto.schedule.ClientDto;
 import java.util.List;
 import ru.sberbank.jd.web_app.config.WebAppConfig;
 
+/**
+ * Сервис для получения инфо о клиентах.
+ */
 @Service
 @RequiredArgsConstructor
 public class ClientService {
@@ -19,10 +22,21 @@ public class ClientService {
         return "http://" + webAppConfig.getScheduleServiceUrl() + ":" + webAppConfig.getScheduleServicePort() + "/clients";
     }
 
+    /**
+     * Получить всех клиентов.
+     *
+     * @return список клиентов
+     */
     public List<ClientDto> findAllClients() {
         return Arrays.asList(restTemplate.getForObject(getUri(), ClientDto[].class));
     }
 
+    /**
+     * Получить инфо о клиенте по id
+     *
+     * @param id id клиента
+     * @return инфо о клиенте
+     */
     public ClientDto getClientById(String id) {
         return restTemplate.getForObject(getUri()+"/"+id,ClientDto.class);
     }
