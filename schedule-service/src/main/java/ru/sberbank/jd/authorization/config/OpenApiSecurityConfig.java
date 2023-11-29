@@ -49,7 +49,7 @@ public class OpenApiSecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/swagger-ui/**"))
-                        .hasAuthority("MANAGER")
+                        .hasAuthority("ADMIN")
                         .anyRequest()
                         .permitAll())
                 .logout(logoutConfigurer -> logoutConfigurer
